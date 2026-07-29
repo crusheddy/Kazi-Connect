@@ -1,0 +1,17 @@
+# Netlify config for the Kazi Connect marketing site.
+# This file must sit at the PROJECT ROOT (not inside site/) so the Netlify
+# CLI reads it as configuration. Kept out of the publish folder so it is
+# also never served as a public file.
+
+[build]
+  publish = "site"
+
+# Security headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=()"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<!-- ============================================================
+     KAZI CONNECT - INVESTOR BRIEFING (gated)
+     Excluded from crawling via robots noindex,nofollow and absent
+     from the main nav list (reachable only via the Investor Access
+     button). The access code gate is convenience, not security -
+     everything rendered here is present in the page source.
+     ============================================================ -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investor Access - Kazi Connect</title>
+<meta name="description" content="Confidential investor briefing for Kazi Connect. Access by code only.">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#1B2D2A">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="%231B2D2A"/><text x="32" y="44" font-family="Georgia,serif" font-size="36" fill="%23C25E3A" text-anchor="middle">K</text></svg>'>
+<link rel="stylesheet" href="assets/styles.css">
+<script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<script defer src="assets/site.js"></script>
+</head>
+
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="site-header">
+  <nav class="nav wrap" aria-label="Main navigation">
+    <a class="logo" href="index.html"><span class="logo-mark" aria-hidden="true">K</span> Kazi&nbsp;Connect</a>
+    <button class="nav-burger" id="navBurger" aria-expanded="false" aria-controls="navLinks" aria-label="Open menu">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="services.html">Services</a></li>
+      <li><a href="software.html">Software</a></li>
+      <li><a href="sectors.html">Sectors</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" aria-pressed="false" aria-label="Switch to light theme">☀</button>
+      <a class="btn btn-outline btn-sm" href="index.html">Back to site</a>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+
+<!-- ─────────── GATE ─────────── -->
+<div id="gateView">
+  <section class="gate" aria-labelledby="gateTitle">
+    <form class="gate-card" id="gateForm" novalidate>
+      <p class="kicker k-software">Investor access</p>
+      <h1 id="gateTitle" style="font-size:1.5rem">Enter access code</h1>
+      <p>This area contains company financials and is shared with invited investors only.
+         Request a code via the <a href="contact.html">contact page</a>.</p>
+      <div class="field">
+        <label for="gateCode">Access code</label>
+        <input type="text" id="gateCode" name="code" autocomplete="off" autocapitalize="characters">
+        <span class="field-error" aria-live="polite" id="gateError"></span>
+      </div>
+      <div class="btn-row">
+        <button type="submit" class="btn btn-software">Unlock</button>
+        <a class="btn btn-outline" href="index.html">Back to site</a>
+      </div>
+    </form>
+  </section>
+</div>
+
+<!-- ─────────── INVESTOR CONTENT (revealed after code) ─────────── -->
+<div id="investorView" hidden>
+
+  <!-- The thesis -->
+  <section class="inv-hero" aria-labelledby="invTitle">
+    <div class="wrap">
+      <p class="kicker k-neutral">Investor briefing · Confidential</p>
+      <h1 id="invTitle" style="max-width:22ch">Services pay for today. The platform is the upside.</h1>
+      <p class="lead">
+        Kazi Connect's dual model is the investment thesis. The recruitment and HR services line is
+        the near-term revenue engine - cash-generative from the first engagements, and the reason
+        the platform gets built against real delivery rather than guesswork. Kazi Connect HMS is the
+        scale and margin story: software that sells cross-border in USD, on top of a services
+        business designed to pay its own way.
+      </p>
+
+      <div class="ask-box reveal">
+        <p class="kicker k-services" style="margin-bottom:.4rem">The ask</p>
+        <p class="figure">TZS 50,000,000</p>
+        <p style="color:var(--text-2);margin:0">
+          Raise range TZS 50,000,000 – 150,000,000. Structure open - equity, convertible note,
+          or revenue-share. Use of funds detailed below.
+        </p>
+      </div>
+
+      <!-- Current status stated plainly: the company is pre-revenue. Every
+           figure below this point is a projection, not a historical result. -->
+      <div class="pipeline-note reveal" style="margin-top:2rem">
+        <span class="line-tag t-services">Current status</span>
+        <p style="margin:.6rem 0 0">
+          <strong style="color:var(--text)">Kazi Connect is pre-revenue and has not yet delivered
+          client engagements.</strong> There is no trading history behind the figures on this page -
+          every number here is a forward projection. What exists today is the HMS platform (built
+          and working), a recruitment and HR Partner team, university/college/VETA sourcing
+          partnerships, and a verified candidate database. What does not yet exist is a client book.
+          We would rather you priced that risk accurately than discovered it later.
+        </p>
+      </div>
+
+      <div class="inv-stats">
+        <div class="inv-stat reveal"><span class="figure">65%</span><p>Projected gross margin (Services line)</p></div>
+        <div class="inv-stat reveal"><span class="figure">49</span><p>Target Services clients by Year 3</p></div>
+        <div class="inv-stat reveal"><span class="figure">TZS 1.31B</span><p>Projected ARR by Year 3</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Financials -->
+  <section class="section-alt" aria-labelledby="finTitle">
+    <div class="wrap">
+      <p class="kicker k-services">Financial projections</p>
+      <h2 id="finTitle">Three-year outlook - Services line only</h2>
+      <p class="lead">
+        These projections cover the <strong style="color:var(--text)">Services line only</strong>.
+        SaaS subscription revenue from HMS is upside not yet modeled - deliberately, so the base
+        case stands on the proven line.
+      </p>
+
+      <div class="table-wrap reveal" style="margin-top:1.6rem">
+        <table>
+          <caption>Projected Services-line financials. All monetary figures in Tanzanian Shillings (TZS).</caption>
+          <thead>
+            <tr><th scope="col">Metric</th>
+                <th scope="col" class="num-cell">Year 1</th>
+                <th scope="col" class="num-cell">Year 2</th>
+                <th scope="col" class="num-cell">Year 3</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Revenue (TZS)</th>
+                <td class="num-cell">243,375,000</td>
+                <td class="num-cell">823,500,000</td>
+                <td class="num-cell">1,227,375,000</td></tr>
+            <tr><th scope="row">EBITDA (TZS)</th>
+                <td class="num-cell">113,793,750</td>
+                <td class="num-cell">415,875,000</td>
+                <td class="num-cell">602,193,750</td></tr>
+            <tr><th scope="row">EBITDA margin</th>
+                <td class="num-cell">47%</td>
+                <td class="num-cell">51%</td>
+                <td class="num-cell">49%</td></tr>
+            <tr><th scope="row">Active clients</th>
+                <td class="num-cell">21</td>
+                <td class="num-cell">43</td>
+                <td class="num-cell">49</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Charts mirror the table above; the table is the accessible fallback -->
+      <div class="chart-grid">
+        <div class="chart-card reveal">
+          <h3>Projected revenue by year - Services line (TZS)</h3>
+          <div class="chart-box"><canvas id="revenueChart" role="img"
+            aria-label="Bar chart of projected Services revenue: Year 1 TZS 243.4 million, Year 2 TZS 823.5 million, Year 3 TZS 1,227.4 million."></canvas></div>
+          <p class="chart-fallback" id="revenueFallback" hidden>
+            Chart unavailable offline - see the table above for the same figures.</p>
+        </div>
+        <div class="chart-card reveal">
+          <h3>Use of funds</h3>
+          <div class="chart-box" style="height:240px"><canvas id="fundsChart" role="img"
+            aria-label="Doughnut chart of use of funds: Technology and HMS 30%, Team expansion 25%, Marketing and business development 25%, Working capital 15%, Compliance and regional 5%."></canvas></div>
+          <ul class="chart-legend" id="fundsLegend">
+            <li><span class="swatch" style="background:#C25E3A"></span>Technology &amp; HMS<span class="pct">30%</span></li>
+            <li><span class="swatch" style="background:#4A90D9"></span>Team expansion<span class="pct">25%</span></li>
+            <li><span class="swatch" style="background:#BE8A26"></span>Marketing &amp; BD<span class="pct">25%</span></li>
+            <li><span class="swatch" style="background:#22A79E"></span>Working capital<span class="pct">15%</span></li>
+            <li><span class="swatch" style="background:#9C5AA8"></span>Compliance &amp; regional<span class="pct">5%</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Roadmap -->
+  <section aria-labelledby="roadTitle">
+    <div class="wrap">
+      <p class="kicker k-neutral">Roadmap</p>
+      <h2 id="roadTitle">Five phases</h2>
+      <ol class="roadmap">
+        <li class="reveal"><span class="dot" aria-hidden="true">1</span>
+          <h3>Foundation <span class="when">Months 1–6</span></h3>
+          <p>Core team hired, first-cohort clients onboarded, delivery playbooks written, HMS in
+             daily internal use.</p></li>
+        <li class="reveal"><span class="dot" aria-hidden="true">2</span>
+          <h3>Systemize <span class="when">Months 7–12</span></h3>
+          <p>Processes documented and delegated; quality no longer depends on the founder in every
+             engagement. SLA reporting standardized.</p></li>
+        <li class="reveal"><span class="dot" aria-hidden="true">3</span>
+          <h3>Expand Tanzania <span class="when">Year 2</span></h3>
+          <p>Mwanza and Arusha presence; sector teams deepen in banking, NGO, manufacturing, and
+             education.</p></li>
+        <li class="saas reveal"><span class="dot" aria-hidden="true">4</span>
+          <h3>Raise &amp; Build - HMS v2 <span class="when">Years 2–3</span><span class="saas-chip">SaaS line scales here</span></h3>
+          <p>This raise funds HMS v2: self-serve onboarding, billing, and the analytics suite.
+             External subscriptions open beyond the pilot cohort - the software line begins
+             compounding on top of services revenue.</p></li>
+        <li class="saas reveal"><span class="dot" aria-hidden="true">5</span>
+          <h3>EAC entry via licensing <span class="when">Year 3+</span><span class="saas-chip">SaaS line scales here</span></h3>
+          <p>East African Community expansion through licensing partners - the platform crosses
+             borders as software, without replicating the services headcount in each market.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Risks -->
+  <section class="section-alt" aria-labelledby="riskTitle">
+    <div class="wrap">
+      <p class="kicker k-neutral">Risks</p>
+      <h2 id="riskTitle">Risks &amp; mitigations, stated plainly</h2>
+      <div class="table-wrap reveal" style="margin-top:1.6rem">
+        <table>
+          <thead><tr><th scope="col">Risk</th><th scope="col">Mitigation</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">No trading history - pre-revenue, no clients delivered to date</th>
+                <td>This is the primary risk and we do not dress it up. Mitigation is that the
+                    capital-intensive parts are already done: the platform is built, the team is
+                    hired, sourcing partnerships are signed and candidates are registered. The
+                    unproven step is client acquisition, not build-out.</td></tr>
+            <tr><th scope="row">Founder dependency - delivery and product both trace to one person</th>
+                <td>Phase 2 exists for this reason: documented playbooks, an operations lead hire,
+                    and HR Partners who own client relationships directly.</td></tr>
+            <tr><th scope="row">Client concentration in early cohorts</th>
+                <td>Four-sector focus caps exposure; no single client above 15% of revenue as a
+                    standing policy from Year 2.</td></tr>
+            <tr><th scope="row">Receivables risk - NGO and corporate payment cycles run long</th>
+                <td>Deposits on engagement, milestone billing, and 15% of the raise held as
+                    working capital.</td></tr>
+            <tr><th scope="row">Labor-law and regulatory change</th>
+                <td>Compliance monitoring is a paid service we sell - the same watch we keep for
+                    Enterprise clients protects our own contracts.</td></tr>
+            <tr><th scope="row">SaaS execution risk - services firms often fail to become software companies</th>
+                <td>HMS is not speculative: it already runs every services engagement. The raise
+                    funds packaging and go-to-market, not a first build.</td></tr>
+            <tr><th scope="row">Competition from regional job boards and global ATS products</th>
+                <td>Local moat: verified candidate database, Tanzanian labor-law workflows, and
+                    TZS-market pricing that global products don't serve.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Document request -->
+  <section aria-labelledby="docTitle">
+    <div class="wrap">
+      <p class="kicker k-neutral">Next step</p>
+      <h2 id="docTitle">Request the full documents</h2>
+      <p class="lead">The complete business plan, financial model, and pitch deck are shared under
+         NDA. Tell us who you are and what you'd like to see.</p>
+      <form id="investorForm" data-form="investor-document-request" novalidate style="max-width:720px">
+        <div class="form-grid">
+          <div class="field">
+            <label for="iName">Name <span class="req" aria-hidden="true">*</span></label>
+            <input type="text" id="iName" name="name" autocomplete="name" required>
+            <span class="field-error" aria-live="polite"></span>
+          </div>
+          <div class="field">
+            <label for="iEmail">Email <span class="req" aria-hidden="true">*</span></label>
+            <input type="email" id="iEmail" name="email" autocomplete="email" required>
+            <span class="field-error" aria-live="polite"></span>
+          </div>
+          <div class="field full">
+            <label for="iOrg">Organization / fund <span class="req" aria-hidden="true">*</span></label>
+            <input type="text" id="iOrg" name="organization" autocomplete="organization" required>
+            <span class="field-error" aria-live="polite"></span>
+          </div>
+          <div class="field full">
+            <label for="iDocs">Documents requested <span class="req" aria-hidden="true">*</span></label>
+            <select id="iDocs" name="documents" required>
+              <option value="">Select…</option>
+              <option>Full business plan</option>
+              <option>Financial model (spreadsheet)</option>
+              <option>Pitch deck</option>
+              <option>All of the above</option>
+            </select>
+            <span class="field-error" aria-live="polite"></span>
+          </div>
+          <div class="field full">
+            <label for="iMsg">Message</label>
+            <textarea id="iMsg" name="message"></textarea>
+            <span class="field-error" aria-live="polite"></span>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button type="submit" class="btn btn-services">Request documents</button>
+          <a class="btn btn-outline" href="mailto:emmanuelmacha123@gmail.com?subject=Investor%20conversation%20-%20Kazi%20Connect">Email Eddie directly</a>
+        </div>
+        <p class="form-status" role="status" aria-live="polite"></p>
+      </form>
+      <div class="btn-row" style="margin-top:2.5rem">
+        <a class="btn btn-outline" href="index.html">← Back to main site</a>
+      </div>
+    </div>
+  </section>
+</div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="footer-line" style="margin-top:0;border-top:0;padding-top:0">
+      © <span id="year">2026</span> Kazi Connect. Dar es Salaam, Tanzania.
+      This briefing is confidential and shared with invited recipients only.
+      <a href="index.html">Back to the main site</a>.
+    </p>
+  </div>
+</footer>
+</body>
+</html>

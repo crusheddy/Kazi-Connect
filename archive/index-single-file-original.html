@@ -1,0 +1,1767 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<!-- ============================================================
+     KAZI CONNECT — single-file site
+     Two business lines, one company:
+       Line 1  Recruitment & HR Services (done-for-you)  — terracotta
+       Line 2  Kazi Connect HMS software (self-serve)    — savanna gold
+     Sections are marked with banner comments for easy editing.
+     Only external dependency: Chart.js (CDN, loaded below).
+     ============================================================ -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kazi Connect — Recruitment &amp; HR Services and Hiring Software, Dar es Salaam</title>
+<meta name="description" content="Kazi Connect runs recruitment and HR operations for Tanzanian companies on its own platform — and sells that same platform, Kazi Connect HMS, to teams who hire in-house.">
+<!-- robots meta: JS switches this to noindex,nofollow while the gated
+     investor view is open, so investor content is excluded from crawling -->
+<meta name="robots" content="index,follow" id="robotsMeta">
+<link rel="canonical" href="https://kazi-connect.netlify.app/">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Kazi Connect">
+<meta property="og:title" content="Kazi Connect — Hire with us, or hire with our software">
+<meta property="og:description" content="Done-for-you recruitment &amp; HR services in Tanzania, and the HMS hiring platform our own recruiters use — sold as a subscription.">
+<meta property="og:url" content="https://kazi-connect.netlify.app/">
+<meta property="og:locale" content="en_TZ">
+<meta name="theme-color" content="#1B2D2A">
+<!-- Inline SVG favicon (no external file needed) -->
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="%231B2D2A"/><text x="32" y="44" font-family="Georgia,serif" font-size="36" fill="%23C25E3A" text-anchor="middle">K</text></svg>'>
+<!-- Only external dependency: Chart.js -->
+<script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+
+<style>
+/* ============================================================
+   DESIGN SYSTEM — "Serengeti Dawn"
+   Dark by default; light theme via [data-theme="light"].
+   Line signals:  Services = terracotta   Software = savanna gold
+   (always paired with a text label, never color alone)
+   ============================================================ */
+:root{
+  /* Brand constants */
+  --slate:      #1B2D2A;   /* deep slate green — primary dark ground */
+  --terracotta: #C25E3A;   /* primary accent — Services line */
+  --gold:       #D9A441;   /* secondary accent — Software line */
+  --sand:       #F4EFE4;   /* warm sand — light neutral */
+  --ink:        #232B29;   /* body text on light grounds */
+  --stone:      #5F6B66;   /* muted secondary text */
+
+  /* Dark theme (default) */
+  --bg:        #1B2D2A;
+  --bg-deep:   #152220;    /* alternating section ground */
+  --card:      #22332F;    /* elevated surfaces */
+  --card-2:    #283B36;
+  --text:      #F4EFE4;
+  --text-2:    #AFBCB6;    /* secondary text, AA on --bg */
+  --border:    rgba(244,239,228,.14);
+  --border-strong: rgba(244,239,228,.28);
+
+  /* Accent text tuned per theme for contrast */
+  --terracotta-text: #E6906A;  /* links / figures on dark */
+  --terracotta-deep: #A8461F;  /* solid button ground (white text passes AA) */
+  --gold-text: #D9A441;        /* gold reads well on dark as-is */
+
+  --btn-services-bg: var(--terracotta-deep);
+  --btn-services-fg: #FFF6EE;
+  --btn-software-bg: var(--gold);
+  --btn-software-fg: #232B29;
+
+  --focus: #D9A441;
+  --shadow: 0 10px 30px rgba(0,0,0,.35);
+  --radius: 14px;
+
+  --serif: "Playfair Display", Georgia, "Times New Roman", serif;
+  --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+[data-theme="light"]{
+  --bg:        #FBF8F1;
+  --bg-deep:   #F4EFE4;
+  --card:      #FFFFFF;
+  --card-2:    #F8F4EA;
+  --text:      #232B29;
+  --text-2:    #5F6B66;
+  --border:    rgba(35,43,41,.14);
+  --border-strong: rgba(35,43,41,.30);
+  --terracotta-text: #A8461F;
+  --gold-text: #8A621A;        /* darkened gold for AA text on light */
+  --shadow: 0 10px 30px rgba(35,43,41,.10);
+}
+
+/* ---------- Reset & base ---------- */
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+body{
+  margin:0;
+  font-family:var(--sans);
+  font-size:1rem; line-height:1.65;
+  color:var(--text);
+  background:var(--bg);
+  -webkit-font-smoothing:antialiased;
+}
+img,svg,canvas{max-width:100%}
+h1,h2,h3,h4{font-family:var(--serif); line-height:1.15; margin:0 0 .5em; font-weight:600; letter-spacing:.005em}
+h1{font-size:clamp(2.1rem,5vw,3.4rem)}
+h2{font-size:clamp(1.6rem,3.4vw,2.4rem)}
+h3{font-size:clamp(1.15rem,2vw,1.45rem)}
+p{margin:0 0 1em}
+a{color:var(--terracotta-text)}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:3px solid var(--focus); outline-offset:2px; border-radius:3px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip-link{position:absolute;left:-999px;top:0;background:var(--gold);color:var(--ink);padding:.6rem 1rem;z-index:200;border-radius:0 0 8px 0;font-weight:600}
+.skip-link:focus{left:0}
+
+.wrap{max-width:1160px;margin-inline:auto;padding-inline:clamp(18px,4vw,32px)}
+section{padding-block:clamp(56px,8vw,96px); scroll-margin-top:84px}
+.section-alt{background:var(--bg-deep)}
+[data-theme="light"] .section-alt{background:var(--bg-deep)}
+
+/* Kickers — small uppercase labels above headings */
+.kicker{
+  display:inline-flex;align-items:center;gap:.55em;
+  font-size:.78rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  margin-bottom:1rem;
+}
+.kicker::before{content:"";width:26px;height:3px;border-radius:2px;background:currentColor}
+.kicker.k-services{color:var(--terracotta-text)}
+.kicker.k-software{color:var(--gold-text)}
+.kicker.k-neutral{color:var(--text-2)}
+
+.lead{font-size:1.12rem;color:var(--text-2);max-width:46rem}
+
+/* Line tags — the always-visible label that pairs with each line's color */
+.line-tag{
+  display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;padding:.28em .7em;border-radius:999px;border:1.5px solid;
+}
+.line-tag.t-services{color:var(--terracotta-text);border-color:var(--terracotta-text)}
+.line-tag.t-software{color:var(--gold-text);border-color:var(--gold-text)}
+
+/* ---------- Buttons ---------- */
+.btn{
+  display:inline-block;font:inherit;font-weight:600;cursor:pointer;text-decoration:none;
+  padding:.8rem 1.5rem;border-radius:10px;border:2px solid transparent;
+  transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn-services{background:var(--btn-services-bg);color:var(--btn-services-fg)}
+.btn-services:hover{box-shadow:0 6px 18px rgba(194,94,58,.35)}
+.btn-software{background:var(--btn-software-bg);color:var(--btn-software-fg)}
+.btn-software:hover{box-shadow:0 6px 18px rgba(217,164,65,.35)}
+.btn-outline{background:transparent;color:var(--text);border-color:var(--border-strong)}
+.btn-outline:hover{border-color:var(--text)}
+.btn-sm{padding:.5rem 1rem;font-size:.9rem}
+
+/* ---------- Header / nav ---------- */
+.site-header{
+  position:sticky;top:0;z-index:100;
+  background:color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border);
+}
+.nav{display:flex;align-items:center;gap:1rem;min-height:68px}
+.logo{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:var(--text);font-family:var(--serif);font-size:1.3rem;font-weight:700}
+.logo-mark{width:34px;height:34px;border-radius:9px;background:var(--terracotta);color:#FFF6EE;display:grid;place-items:center;font-size:1.1rem;flex:none}
+.nav-links{display:flex;gap:.25rem;list-style:none;margin:0 0 0 auto;padding:0}
+.nav-links a{
+  display:block;padding:.5rem .8rem;border-radius:8px;text-decoration:none;
+  color:var(--text-2);font-size:.95rem;font-weight:500;
+}
+.nav-links a:hover{color:var(--text)}
+.nav-links a[aria-current="true"]{color:var(--terracotta-text);font-weight:600}
+.nav-actions{display:flex;align-items:center;gap:.6rem;margin-left:.5rem}
+.theme-toggle{
+  background:transparent;border:1px solid var(--border-strong);color:var(--text);
+  width:40px;height:40px;border-radius:10px;cursor:pointer;font-size:1.05rem;line-height:1;
+}
+.nav-burger{display:none;background:transparent;border:1px solid var(--border-strong);color:var(--text);width:44px;height:40px;border-radius:10px;cursor:pointer;font-size:1.2rem}
+
+/* ---------- Hero ---------- */
+.hero{padding-block:clamp(56px,9vw,110px) clamp(48px,7vw,80px)}
+.hero h1{max-width:17ch}
+.hero h1 em{font-style:italic;color:var(--terracotta-text)}
+.hero .lead{margin-top:1rem}
+.hero-split{
+  display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,3vw,28px);
+  margin-top:clamp(28px,5vw,48px);
+}
+.path-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:clamp(22px,3.5vw,34px);box-shadow:var(--shadow);
+  display:flex;flex-direction:column;gap:.9rem;border-top:4px solid;
+}
+.path-card.c-services{border-top-color:var(--terracotta)}
+.path-card.c-software{border-top-color:var(--gold)}
+.path-card h2{margin:0;font-size:clamp(1.4rem,2.6vw,1.9rem)}
+.path-card p{color:var(--text-2);margin:0}
+.path-card .btn{margin-top:auto;align-self:flex-start}
+.path-card ul{margin:0;padding-left:1.1rem;color:var(--text-2);font-size:.95rem}
+.path-card li{margin-bottom:.3rem}
+.c-services li::marker{color:var(--terracotta-text)}
+.c-software li::marker{color:var(--gold-text)}
+
+/* ---------- Generic card grids ---------- */
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2.5vw,24px)}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(16px,2.5vw,24px)}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2.5vw,24px)}
+.card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:clamp(20px,3vw,28px);
+}
+.card h3{margin-bottom:.4rem}
+.card p{color:var(--text-2);margin:0}
+.card .num{font-family:var(--serif);font-size:1.6rem;color:var(--gold-text);display:block;margin-bottom:.4rem}
+
+/* ---------- Pricing ---------- */
+.pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2.5vw,24px);align-items:stretch;margin-top:2rem}
+.price-card{
+  position:relative;background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:clamp(22px,3vw,30px);
+  display:flex;flex-direction:column;gap:.7rem;
+}
+.price-card.p-services{border-top:4px solid var(--terracotta)}
+.price-card.p-software{border-top:4px solid var(--gold)}
+.price-card.recommended{
+  border-color:var(--terracotta);box-shadow:var(--shadow);
+  transform:translateY(-8px);background:var(--card-2);
+}
+.price-card.popular{
+  border-color:var(--gold);box-shadow:var(--shadow);
+  transform:translateY(-8px);background:var(--card-2);
+}
+.badge{
+  position:absolute;top:-14px;left:50%;transform:translateX(-50%);
+  font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:.3em .9em;border-radius:999px;white-space:nowrap;
+}
+.badge.b-services{background:var(--terracotta);color:#FFF6EE}
+.badge.b-software{background:var(--gold);color:var(--ink)}
+.price-card h3{margin:0}
+.price{font-family:var(--serif);font-size:clamp(1.5rem,2.6vw,1.9rem);line-height:1.2}
+.price small{display:block;font-family:var(--sans);font-size:.82rem;color:var(--text-2);font-weight:400;margin-top:.15rem}
+.p-services .price{color:var(--terracotta-text)}
+.p-software .price{color:var(--gold-text)}
+.price-card ul{list-style:none;margin:.4rem 0 1rem;padding:0;color:var(--text-2);font-size:.95rem}
+.price-card li{padding:.34rem 0 .34rem 1.5rem;position:relative;border-bottom:1px dashed var(--border)}
+.price-card li:last-child{border-bottom:0}
+.price-card li::before{content:"✓";position:absolute;left:0;font-weight:700}
+.p-services li::before{color:var(--terracotta-text)}
+.p-software li::before{color:var(--gold-text)}
+.price-card .btn{margin-top:auto;text-align:center}
+
+/* ---------- Tables ---------- */
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius)}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.95rem}
+caption{text-align:left;padding:1rem 1.1rem .4rem;color:var(--text-2);font-size:.88rem}
+th,td{padding:.7rem 1.1rem;text-align:left;border-bottom:1px solid var(--border)}
+thead th{font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-2);background:var(--card-2)}
+tbody tr:nth-child(even){background:color-mix(in srgb, var(--sand) 6%, transparent)}
+[data-theme="light"] tbody tr:nth-child(even){background:color-mix(in srgb, var(--sand) 55%, transparent)}
+tbody tr:last-child td{border-bottom:0}
+td.ok{color:var(--terracotta-text);font-weight:700}
+td.no{color:var(--text-2)}
+td.num-cell,th.num-cell{text-align:right;font-variant-numeric:tabular-nums}
+
+details.compare{margin-top:1.5rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--card)}
+details.compare>summary{
+  cursor:pointer;padding:1rem 1.3rem;font-weight:600;list-style:none;
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+}
+details.compare>summary::-webkit-details-marker{display:none}
+details.compare>summary::after{content:"+";font-size:1.3rem;color:var(--terracotta-text)}
+details.compare[open]>summary::after{content:"–"}
+details.compare .table-wrap{border:0;border-top:1px solid var(--border);border-radius:0 0 var(--radius) var(--radius)}
+
+/* ---------- Process steps ---------- */
+.process{display:grid;grid-template-columns:repeat(5,1fr);gap:clamp(12px,2vw,20px);margin-top:2rem;counter-reset:step}
+.step{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem;position:relative}
+.step .n{font-family:var(--serif);font-size:2rem;color:var(--terracotta-text);line-height:1;display:block;margin-bottom:.5rem}
+.step h3{font-size:1.02rem;font-family:var(--sans);font-weight:600;margin-bottom:.3rem}
+.step p{font-size:.88rem;color:var(--text-2);margin:0}
+
+/* ---------- Feature grid (software) ---------- */
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,2vw,22px);margin-top:2rem}
+.feature{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:12px;padding:1.2rem 1.3rem}
+.feature h3{font-family:var(--sans);font-size:1.02rem;font-weight:600;margin-bottom:.3rem}
+.feature p{font-size:.9rem;color:var(--text-2);margin:0}
+
+/* Decision strip: which line do I need? */
+.decide{margin-top:clamp(36px,5vw,56px);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;display:grid;grid-template-columns:1fr 1fr}
+.decide>div{padding:clamp(20px,3vw,30px)}
+.decide .d-services{background:color-mix(in srgb, var(--terracotta) 12%, var(--card));border-right:1px solid var(--border)}
+.decide .d-software{background:color-mix(in srgb, var(--gold) 12%, var(--card))}
+.decide h3{font-size:1.1rem}
+.decide ul{margin:.5rem 0 0;padding-left:1.15rem;color:var(--text-2);font-size:.95rem}
+.decide li{margin-bottom:.35rem}
+
+/* ---------- Results / stats ---------- */
+.stat-card{background:var(--card);border:1px solid var(--border);border-top:4px solid var(--terracotta);border-radius:var(--radius);padding:1.4rem;display:flex;flex-direction:column;gap:.5rem}
+.stat-card .figure{font-family:var(--serif);font-size:clamp(1.9rem,3.4vw,2.6rem);color:var(--terracotta-text);line-height:1.05}
+.stat-card p{font-size:.93rem;color:var(--text-2);margin:0}
+.stat-card .line-tag{align-self:flex-start;margin-top:auto}
+.ref-note{margin-top:1.4rem;color:var(--text-2);font-size:.92rem;font-style:italic}
+
+/* ---------- Talent pipeline ---------- */
+.pipeline{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2.5vw,24px);margin-top:2rem}
+.pipeline .card ul{margin:.6rem 0 0;padding-left:1.15rem;color:var(--text-2);font-size:.95rem}
+.pipeline .card li{margin-bottom:.35rem}
+.pipeline-note{
+  margin-top:1.4rem;padding:1.1rem 1.3rem;border-left:4px solid var(--terracotta);
+  background:var(--card);border-radius:0 12px 12px 0;color:var(--text-2);
+}
+
+/* ---------- Forms ---------- */
+form{margin-top:1.6rem}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem 1.2rem}
+.field{display:flex;flex-direction:column;gap:.3rem}
+.field.full{grid-column:1/-1}
+label{font-size:.88rem;font-weight:600}
+.req{color:var(--terracotta-text)}
+input[type=text],input[type=email],input[type=tel],select,textarea{
+  font:inherit;color:var(--text);background:var(--bg);
+  border:1px solid var(--border-strong);border-radius:9px;padding:.65rem .8rem;width:100%;
+}
+[data-theme="light"] input[type=text],[data-theme="light"] input[type=email],
+[data-theme="light"] input[type=tel],[data-theme="light"] select,[data-theme="light"] textarea{background:#fff}
+textarea{min-height:110px;resize:vertical}
+input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--focus);outline-offset:1px}
+input[aria-invalid="true"],select[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:#E06C4A}
+.field-error{font-size:.8rem;color:#E8927A;min-height:1em}
+[data-theme="light"] .field-error{color:#A8461F}
+.consent{display:flex;gap:.7rem;align-items:flex-start;font-size:.88rem;color:var(--text-2);grid-column:1/-1;font-weight:400}
+.consent input{width:1.15rem;height:1.15rem;margin-top:.2rem;flex:none;accent-color:var(--terracotta)}
+.form-status{margin-top:1rem;font-weight:600;min-height:1.4em}
+.form-status.ok{color:var(--gold-text)}
+.form-status.err{color:#E8927A}
+[data-theme="light"] .form-status.err{color:#A8461F}
+
+/* ---------- About ---------- */
+.about-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:clamp(24px,4vw,48px);align-items:start;margin-top:1.5rem}
+.founder-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.6rem;text-align:center}
+.founder-avatar{
+  width:110px;height:110px;border-radius:50%;margin:0 auto 1rem;
+  background:linear-gradient(135deg,var(--terracotta),var(--gold));
+  display:grid;place-items:center;font-family:var(--serif);font-size:2.4rem;color:#FFF6EE;
+}
+.founder-card h3{margin-bottom:.15rem}
+.founder-card .role{color:var(--text-2);font-size:.9rem;margin-bottom:.8rem}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center}
+.chip{font-size:.76rem;padding:.3em .8em;border-radius:999px;background:color-mix(in srgb, var(--gold) 18%, transparent);color:var(--gold-text);border:1px solid var(--gold-text)}
+
+/* ---------- Contact / footer ---------- */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,48px)}
+address{font-style:normal;color:var(--text-2)}
+address strong{color:var(--text)}
+.site-footer{background:var(--bg-deep);border-top:1px solid var(--border);padding-block:2.4rem;font-size:.9rem;color:var(--text-2)}
+.footer-grid{display:flex;flex-wrap:wrap;gap:1.5rem 3rem;justify-content:space-between;align-items:flex-start}
+.site-footer ul{list-style:none;margin:.5rem 0 0;padding:0}
+.site-footer li{margin-bottom:.35rem}
+.site-footer a{color:var(--text-2)}
+.site-footer a:hover{color:var(--text)}
+.footer-line{margin-top:1.8rem;padding-top:1.2rem;border-top:1px solid var(--border);font-size:.82rem}
+
+/* ---------- Legal details ---------- */
+.legal details{border:1px solid var(--border);border-radius:12px;background:var(--card);margin-bottom:.8rem}
+.legal summary{cursor:pointer;padding:.9rem 1.2rem;font-weight:600;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.legal summary::-webkit-details-marker{display:none}
+.legal summary::after{content:"+";color:var(--terracotta-text);font-size:1.2rem}
+.legal details[open] summary::after{content:"–"}
+.legal .legal-body{padding:0 1.2rem 1.2rem;color:var(--text-2);font-size:.93rem}
+
+/* ---------- Investor gate + view ---------- */
+.gate{min-height:60vh;display:grid;place-items:center;padding-block:clamp(56px,10vw,120px)}
+.gate-card{max-width:430px;width:100%;background:var(--card);border:1px solid var(--border);border-top:4px solid var(--gold);border-radius:var(--radius);padding:2rem;box-shadow:var(--shadow)}
+.gate-card p{color:var(--text-2);font-size:.95rem}
+
+.inv-hero{padding-block:clamp(48px,7vw,88px) clamp(32px,5vw,56px)}
+.inv-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,2vw,22px);margin-top:2rem}
+.inv-stat{background:var(--card);border:1px solid var(--border);border-top:4px solid var(--gold);border-radius:var(--radius);padding:1.3rem;text-align:center}
+.inv-stat .figure{font-family:var(--serif);font-size:clamp(1.7rem,3vw,2.4rem);color:var(--gold-text);line-height:1.1}
+.inv-stat p{color:var(--text-2);font-size:.9rem;margin:.3rem 0 0}
+.ask-box{
+  margin-top:2rem;padding:clamp(20px,3vw,30px);border-radius:var(--radius);
+  background:color-mix(in srgb, var(--terracotta) 14%, var(--card));
+  border:1px solid var(--terracotta);
+}
+.ask-box .figure{font-family:var(--serif);font-size:clamp(1.9rem,4vw,2.8rem);color:var(--terracotta-text)}
+
+/* Charts */
+.chart-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:clamp(20px,3vw,32px);margin-top:2rem}
+.chart-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem}
+.chart-card h3{font-family:var(--sans);font-size:1.02rem;font-weight:600}
+.chart-box{position:relative;height:300px}
+.chart-legend{list-style:none;margin:1rem 0 0;padding:0;font-size:.9rem}
+.chart-legend li{display:flex;align-items:center;gap:.6rem;padding:.28rem 0;color:var(--text-2)}
+.chart-legend .swatch{width:13px;height:13px;border-radius:4px;flex:none}
+.chart-legend .pct{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--text);font-weight:600}
+.chart-fallback{color:var(--text-2);font-size:.9rem;padding:1rem 0}
+
+/* Roadmap */
+.roadmap{list-style:none;margin:2rem 0 0;padding:0;position:relative}
+.roadmap::before{content:"";position:absolute;left:19px;top:8px;bottom:8px;width:2px;background:var(--border-strong)}
+.roadmap li{position:relative;padding:0 0 1.6rem 58px}
+.roadmap li:last-child{padding-bottom:0}
+.roadmap .dot{
+  position:absolute;left:0;top:0;width:40px;height:40px;border-radius:50%;
+  background:var(--card);border:2px solid var(--terracotta);color:var(--terracotta-text);
+  display:grid;place-items:center;font-family:var(--serif);font-weight:700;
+}
+.roadmap li.saas .dot{border-color:var(--gold);color:var(--gold-text)}
+.roadmap h3{font-family:var(--sans);font-size:1.05rem;font-weight:600;margin-bottom:.2rem}
+.roadmap .when{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text-2)}
+.roadmap p{color:var(--text-2);font-size:.95rem;margin:.3rem 0 0;max-width:60ch}
+.saas-chip{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.22em .7em;border-radius:999px;background:color-mix(in srgb, var(--gold) 20%, transparent);color:var(--gold-text);border:1px solid var(--gold-text);margin-left:.5rem;vertical-align:middle}
+
+/* Reveal on scroll */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){.reveal{opacity:1;transform:none}}
+
+/* ============================================================
+   RESPONSIVE — verified at 375 / 768 / 1440
+   ============================================================ */
+@media (max-width: 980px){
+  .grid-4{grid-template-columns:repeat(2,1fr)}
+  .process{grid-template-columns:repeat(2,1fr)}
+  .features{grid-template-columns:repeat(2,1fr)}
+  .chart-grid{grid-template-columns:1fr}
+  .about-grid{grid-template-columns:1fr}
+  .founder-card{max-width:420px}
+}
+@media (max-width: 820px){
+  .nav-links{
+    display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;
+    background:var(--bg);border-bottom:1px solid var(--border);padding:.6rem 1rem 1rem;
+    box-shadow:var(--shadow);
+  }
+  .nav-links.open{display:flex}
+  .nav-links a{padding:.8rem .6rem;font-size:1.05rem}
+  .nav-burger{display:block;margin-left:auto}
+  .nav-actions{margin-left:0}
+  .nav-actions .btn{display:none}           /* Investor Access moves into menu on mobile */
+  .nav-links .mobile-only{display:block}
+  .pricing{grid-template-columns:1fr;gap:22px}
+  .price-card.recommended,.price-card.popular{transform:none}
+  .grid-3,.grid-2,.pipeline,.contact-grid,.form-grid,.hero-split,.decide,.inv-stats{grid-template-columns:1fr}
+  .decide .d-services{border-right:0;border-bottom:1px solid var(--border)}
+  .field{grid-column:1/-1}
+}
+@media (min-width: 821px){.nav-links .mobile-only{display:none}}
+@media (max-width: 560px){
+  .process{grid-template-columns:1fr}
+  .features{grid-template-columns:1fr}
+  .grid-4{grid-template-columns:1fr}
+  .chart-box{height:240px}
+}
+</style>
+</head>
+
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<!-- ============================================================
+     HEADER / NAV (shared by all views)
+     ============================================================ -->
+<header class="site-header">
+  <nav class="nav wrap" aria-label="Main navigation">
+    <a class="logo" href="#top" data-nav>
+      <span class="logo-mark" aria-hidden="true">K</span>
+      Kazi&nbsp;Connect
+    </a>
+    <button class="nav-burger" id="navBurger" aria-expanded="false" aria-controls="navLinks" aria-label="Open menu">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#services" data-nav>Services</a></li>
+      <li><a href="#software" data-nav>Software</a></li>
+      <li><a href="#sectors" data-nav>Sectors</a></li>
+      <li><a href="#results" data-nav>Results</a></li>
+      <li><a href="#about" data-nav>About</a></li>
+      <li><a href="#contact" data-nav>Contact</a></li>
+      <li class="mobile-only"><a href="#" id="investorLinkMobile">Investor Access</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" aria-pressed="false" aria-label="Switch to light theme">☀</button>
+      <button class="btn btn-outline btn-sm" id="investorLink">Investor Access</button>
+    </div>
+  </nav>
+</header>
+
+<!-- ============================================================
+     MAIN PUBLIC VIEW
+     ============================================================ -->
+<main id="main" data-view="main">
+<span id="top"></span>
+
+<!-- ─────────── HERO — the two-path split ─────────── -->
+<section class="hero" aria-labelledby="heroTitle">
+  <div class="wrap">
+    <p class="kicker k-neutral">Dar es Salaam · Tanzania</p>
+    <h1 id="heroTitle">One hiring engine. <em>Two ways to use it.</em></h1>
+    <p class="lead">
+      Kazi Connect runs recruitment and HR services on its own platform — and now sells access
+      to that platform to companies who hire in-house. Let our team do the hiring for you,
+      or use the exact same software our recruiters use every day.
+    </p>
+
+    <div class="hero-split">
+      <!-- Path A: Services (terracotta) -->
+      <article class="path-card c-services reveal" aria-labelledby="pathServices">
+        <span class="line-tag t-services">Services · Done for you</span>
+        <h2 id="pathServices">Hire with us</h2>
+        <p>Our recruiters and HR Partners run hiring and HR operations on your behalf — sourcing,
+           screening, contracts, compliance — with full pipeline visibility.</p>
+        <ul>
+          <li>Recruitment campaigns run end-to-end</li>
+          <li>Full HR outsourcing available</li>
+          <li>Priced in Tanzanian Shillings</li>
+        </ul>
+        <a class="btn btn-services" href="#services">Book a consultation</a>
+      </article>
+
+      <!-- Path B: Software (gold) -->
+      <article class="path-card c-software reveal" aria-labelledby="pathSoftware">
+        <span class="line-tag t-software">Software · Self-serve</span>
+        <h2 id="pathSoftware">Hire with our software</h2>
+        <p>Kazi Connect HMS — the hiring platform our own team uses — as a subscription for
+           companies who run recruitment themselves.</p>
+        <ul>
+          <li>Pipeline, scheduling &amp; analytics</li>
+          <li>Built for the Tanzanian market</li>
+          <li>Priced in US Dollars, sells cross-border</li>
+        </ul>
+        <a class="btn btn-software" href="#software">Start free trial</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────── THE PROBLEM ─────────── -->
+<section class="section-alt" id="problem" aria-labelledby="problemTitle">
+  <div class="wrap">
+    <p>The problem</p>
+    <h2 id="problemTitle">Hiring in Tanzania is broken in three ways</h2>
+    <p class="lead">Both of our lines exist to answer the same three gaps.</p>
+    <div class="grid-3" style="margin-top:2rem">
+      <article class="card reveal">
+        <span class="num" aria-hidden="true">01</span>
+        <h3>No recruitment bandwidth</h3>
+        <p>Growing companies can't scale hiring with a lean — or absent — HR team. Roles stay
+           open for months while managers screen CVs between meetings.</p>
+      </article>
+      <article class="card reveal">
+        <span class="num" aria-hidden="true">02</span>
+        <h3>No formal HR function</h3>
+        <p>Mid-size firms run on informal contracts and paper records, leaving them exposed to
+           labor-law risk they often discover only during a dispute.</p>
+      </article>
+      <article class="card reveal">
+        <span class="num" aria-hidden="true">03</span>
+        <h3>Underserved options</h3>
+        <p>Informal recruiters lack structure. Large agencies price out the mid-market. Generic
+           HR software isn't built for how the Tanzanian market actually hires.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     LINE 1 — RECRUITMENT & HR SERVICES (terracotta)
+     ============================================================ -->
+<section id="services" aria-labelledby="servicesTitle">
+  <div class="wrap">
+    <p>Done for you</p>
+    <h2 id="servicesTitle">Recruitment &amp; HR Services</h2>
+    <p class="lead">
+      Our team runs hiring and HR operations for you, on our platform, with full pipeline
+      visibility at every step. You see everything; we do the work. All Services plans are
+      billed monthly in Tanzanian Shillings.
+    </p>
+
+    <!-- Services pricing (TZS only — never mixed with USD) -->
+    <div class="pricing">
+      <article class="price-card p-services reveal" aria-labelledby="tierBasic">
+        <span class="line-tag t-services">Services</span>
+        <h3 id="tierBasic">Basic</h3>
+        <p class="price">TZS 1,500,000<small>per month</small></p>
+        <ul>
+          <li>Ad-hoc recruitment support</li>
+          <li>Candidate sourcing &amp; screening</li>
+          <li>Pipeline visibility on our platform</li>
+        </ul>
+        <a class="btn btn-outline" href="#contact">Book a consultation</a>
+      </article>
+
+      <article class="price-card p-services recommended reveal" aria-labelledby="tierPro">
+        <span class="badge b-services">Recommended</span>
+        <span class="line-tag t-services">Services</span>
+        <h3 id="tierPro">Professional</h3>
+        <p class="price">TZS 2,250,000<small>per month</small></p>
+        <ul>
+          <li>Structured multi-role campaigns</li>
+          <li>Faster SLAs on shortlists</li>
+          <li>Direct candidate database search</li>
+          <li>Everything in Basic</li>
+        </ul>
+        <a class="btn btn-services" href="#contact">Book a consultation</a>
+      </article>
+
+      <article class="price-card p-services reveal" aria-labelledby="tierEnt">
+        <span class="line-tag t-services">Services</span>
+        <h3 id="tierEnt">Enterprise</h3>
+        <p class="price">TZS 3,375,000<small>per month</small></p>
+        <ul>
+          <li>Full HR outsourcing, assigned HR Partner</li>
+          <li>Contract standardization &amp; staff handbook</li>
+          <li>Digital HR records &amp; disciplinary support</li>
+          <li>Payroll advisory &amp; compliance monitoring</li>
+        </ul>
+        <a class="btn btn-outline" href="#contact">Book a consultation</a>
+      </article>
+    </div>
+
+    <!-- Expandable full comparison -->
+    <details class="compare reveal">
+      <summary>Compare all Services features</summary>
+      <div class="table-wrap">
+        <table>
+          <caption>Feature comparison across Services tiers. All prices in TZS per month.</caption>
+          <thead>
+            <tr>
+              <th scope="col">Feature</th>
+              <th scope="col">Basic<br>TZS 1,500,000</th>
+              <th scope="col">Professional<br>TZS 2,250,000</th>
+              <th scope="col">Enterprise<br>TZS 3,375,000</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Candidate sourcing &amp; screening</th>
+              <td class="ok"><span aria-hidden="true">✓</span><span class="sr-only">Included</span></td>
+              <td class="ok"><span aria-hidden="true">✓</span><span class="sr-only">Included</span></td>
+              <td class="ok"><span aria-hidden="true">✓</span><span class="sr-only">Included</span></td></tr>
+            <tr><th scope="row">Ad-hoc recruitment support</th>
+              <td class="ok"><span aria-hidden="true">✓</span><span class="sr-only">Included</span></td>
+              <td class="ok"><span aria-hidden="true">✓</span><span class="sr-only">Included</span></td>
+              <td class="ok"><span aria-hidden="true">✓</span><span class="sr-only">Included</span></td></tr>
+            <tr><th scope="row">Structured multi-role campaigns</th>
+              <td class="no"><span aria-hidden="true">—</span><span class="sr-only">Not included</span></td>
+              <td class="ok"><span aria-hidden="true">✓</span><span class="sr-only">Included</span></td>
+              <td class="ok"><span aria-hidden="true">✓</span><span class="sr-only">Included</span></td></tr>
+            <tr><th scope="row">Priority SLA turnaround</th>
+              <td class="no"><span aria-hidden="true">—</span><span class="sr-only">Not included</span></td>
+              <td class="ok"><span aria-hidden="true">✓</span><span class="sr-only">Included</span></td>
+              <td class="ok"><span aria-hidden="true">✓</span><span class="sr-only">Included</span></td></tr>
+            <tr><th scope="row">Direct candidate database search</th>
+              <td class="no"><span aria-hidden="true">—</span><span class="sr-only">Not included</span></td>
+              <td class="ok"><span aria-hidden="true">✓</span><span class="sr-only">Included</span></td>
+              <td class="ok"><span aria-hidden="true">✓</span><span class="sr-only">Included</span></td></tr>
+            <tr><th scope="row">Assigned HR Partner</th>
+              <td class="no"><span aria-hidden="true">—</span><span class="sr-only">Not included</span></td>
+              <td class="no"><span aria-hidden="true">—</span><span class="sr-only">Not included</span></td>
+              <td class="ok"><span aria-hidden="true">✓</span><span class="sr-only">Included</span></td></tr>
+            <tr><th scope="row">Contract standardization</th>
+              <td class="no"><span aria-hidden="true">—</span><span class="sr-only">Not included</span></td>
+              <td class="no"><span aria-hidden="true">—</span><span class="sr-only">Not included</span></td>
+              <td class="ok"><span aria-hidden="true">✓</span><span class="sr-only">Included</span></td></tr>
+            <tr><th scope="row">Staff handbook development</th>
+              <td class="no"><span aria-hidden="true">—</span><span class="sr-only">Not included</span></td>
+              <td class="no"><span aria-hidden="true">—</span><span class="sr-only">Not included</span></td>
+              <td class="ok"><span aria-hidden="true">✓</span><span class="sr-only">Included</span></td></tr>
+            <tr><th scope="row">Digital HR records</th>
+              <td class="no"><span aria-hidden="true">—</span><span class="sr-only">Not included</span></td>
+              <td class="no"><span aria-hidden="true">—</span><span class="sr-only">Not included</span></td>
+              <td class="ok"><span aria-hidden="true">✓</span><span class="sr-only">Included</span></td></tr>
+            <tr><th scope="row">Disciplinary process support</th>
+              <td class="no"><span aria-hidden="true">—</span><span class="sr-only">Not included</span></td>
+              <td class="no"><span aria-hidden="true">—</span><span class="sr-only">Not included</span></td>
+              <td class="ok"><span aria-hidden="true">✓</span><span class="sr-only">Included</span></td></tr>
+            <tr><th scope="row">Payroll advisory</th>
+              <td class="no"><span aria-hidden="true">—</span><span class="sr-only">Not included</span></td>
+              <td class="no"><span aria-hidden="true">—</span><span class="sr-only">Not included</span></td>
+              <td class="ok"><span aria-hidden="true">✓</span><span class="sr-only">Included</span></td></tr>
+            <tr><th scope="row">Labor-law compliance monitoring</th>
+              <td class="no"><span aria-hidden="true">—</span><span class="sr-only">Not included</span></td>
+              <td class="no"><span aria-hidden="true">—</span><span class="sr-only">Not included</span></td>
+              <td class="ok"><span aria-hidden="true">✓</span><span class="sr-only">Included</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    <!-- Our process -->
+    <div style="margin-top:clamp(48px,6vw,72px)">
+      <p class="kicker k-services">Our process</p>
+      <h2>Five stages, every engagement</h2>
+      <ol class="process" style="list-style:none;padding:0">
+        <li class="step reveal"><span class="n" aria-hidden="true">1</span>
+          <h3>Role &amp; Requirements Definition</h3>
+          <p>We sit with the hiring manager to define the role, success criteria, and compensation band.</p></li>
+        <li class="step reveal"><span class="n" aria-hidden="true">2</span>
+          <h3>Sourcing Strategy</h3>
+          <p>Database search, university and community channels, and targeted outreach — matched to the role.</p></li>
+        <li class="step reveal"><span class="n" aria-hidden="true">3</span>
+          <h3>Screening &amp; Verification</h3>
+          <p>Structured interviews, credential and reference verification before any CV reaches you.</p></li>
+        <li class="step reveal"><span class="n" aria-hidden="true">4</span>
+          <h3>Shortlist &amp; Interview Coordination</h3>
+          <p>A ranked shortlist with structured notes; we schedule and coordinate your interviews.</p></li>
+        <li class="step reveal"><span class="n" aria-hidden="true">5</span>
+          <h3>Offer, Contract &amp; Onboarding</h3>
+          <p>Offer negotiation, compliant contracts, and a supported first-90-days onboarding plan.</p></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     LINE 2 — KAZI CONNECT HMS SOFTWARE (savanna gold)
+     ============================================================ -->
+<section id="software" class="section-alt" aria-labelledby="softwareTitle">
+  <div class="wrap">
+    <p class="kicker k-software">Do it yourself</p>
+    <h2 id="softwareTitle">Kazi Connect HMS</h2>
+    <p class="lead">
+      <strong style="color:var(--text)">The platform our own recruiters use every day.</strong>
+      This is the bridge between our two lines: every Services engagement runs on HMS, and the
+      same software is available as a subscription for companies with their own hiring team.
+      Subscriptions are billed annually in US Dollars.
+    </p>
+
+    <!-- Feature grid -->
+    <div class="features">
+      <article class="feature reveal"><h3>Smart job posting</h3>
+        <p>Create and publish structured job posts with role templates tuned to the local market.</p></article>
+      <article class="feature reveal"><h3>Candidate pipeline &amp; kanban</h3>
+        <p>Drag candidates through configurable stages; nothing falls through the cracks.</p></article>
+      <article class="feature reveal"><h3>Interview scheduling</h3>
+        <p>Coordinate panels and candidates without the email back-and-forth.</p></article>
+      <article class="feature reveal"><h3>Collaborative hiring</h3>
+        <p>Structured feedback forms and shared scorecards keep the whole panel aligned.</p></article>
+      <article class="feature reveal"><h3>Analytics &amp; time-to-hire</h3>
+        <p>Pipeline conversion, source performance, and time-to-hire reporting out of the box.</p></article>
+      <article class="feature reveal"><h3>Secure candidate data</h3>
+        <p>Role-based access and careful candidate data handling, designed around Tanzania's
+           Personal Data Protection Act (2022).</p></article>
+    </div>
+
+    <!-- Software pricing (USD only — never mixed with TZS) -->
+    <div class="pricing">
+      <article class="price-card p-software reveal" aria-labelledby="planStarter">
+        <span class="line-tag t-software">Software</span>
+        <h3 id="planStarter">Starter</h3>
+        <p class="price">$29<small>per month, billed annually</small></p>
+        <ul>
+          <li>Up to 5 active job posts</li>
+          <li>2 team members</li>
+          <li>Candidate pipeline</li>
+          <li>Email notifications</li>
+          <li>Basic reports</li>
+        </ul>
+        <a class="btn btn-outline" href="#contact">Start free trial</a>
+      </article>
+
+      <article class="price-card p-software popular reveal" aria-labelledby="planGrowth">
+        <span class="badge b-software">Most Popular</span>
+        <span class="line-tag t-software">Software</span>
+        <h3 id="planGrowth">Growth</h3>
+        <p class="price">$79<small>per month, billed annually</small></p>
+        <ul>
+          <li>Up to 20 active job posts</li>
+          <li>10 team members</li>
+          <li>Advanced pipeline &amp; kanban</li>
+          <li>Interview scheduling</li>
+          <li>Analytics dashboard</li>
+          <li>Priority support</li>
+        </ul>
+        <a class="btn btn-software" href="#contact">Start free trial</a>
+      </article>
+
+      <article class="price-card p-software reveal" aria-labelledby="planScale">
+        <span class="line-tag t-software">Software</span>
+        <h3 id="planScale">Scale</h3>
+        <p class="price">Custom<small>annual agreement</small></p>
+        <ul>
+          <li>Unlimited job posts &amp; team members</li>
+          <li>SSO &amp; advanced security</li>
+          <li>Custom integrations</li>
+          <li>Dedicated account manager</li>
+          <li>Service-level agreement</li>
+        </ul>
+        <a class="btn btn-outline" href="#contact">Talk to sales</a>
+      </article>
+    </div>
+
+    <!-- Decision strip: Services vs Software -->
+    <div class="decide reveal" role="group" aria-label="Not sure which line you need?">
+      <div class="d-services">
+        <span class="line-tag t-services">Services</span>
+        <h3 style="margin-top:.7rem">Choose Services if…</h3>
+        <ul>
+          <li>You lack recruitment bandwidth and roles keep staying open</li>
+          <li>You have no formal HR function and want one without hiring one</li>
+          <li>You'd rather buy outcomes — shortlists, contracts, compliance</li>
+        </ul>
+      </div>
+      <div class="d-software">
+        <span class="line-tag t-software">Software</span>
+        <h3 style="margin-top:.7rem">Choose Software if…</h3>
+        <ul>
+          <li>You already have a hiring team that runs its own recruitment</li>
+          <li>You want better tooling: pipeline, scheduling, analytics</li>
+          <li>You're hiring across borders and prefer USD billing</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SHARED PROOF — SECTORS
+     ============================================================ -->
+<section id="sectors" aria-labelledby="sectorsTitle">
+  <div class="wrap">
+    <p class="kicker k-neutral">Where we work</p>
+    <h2 id="sectorsTitle">Four sectors, deep focus</h2>
+    <p class="lead">We deliberately concentrate on the sectors where we have placed and supported staff.</p>
+    <div class="grid-4" style="margin-top:2rem">
+      <article class="card reveal"><h3>Banking &amp; Financial Services</h3>
+        <p>Branch expansion hiring, compliance-sensitive roles, and probation-tracked onboarding.</p></article>
+      <article class="card reveal"><h3>NGOs &amp; International Development</h3>
+        <p>Programme staffing against donor deadlines, with documentation donors expect.</p></article>
+      <article class="card reveal"><h3>Manufacturing &amp; Private Sector</h3>
+        <p>Skilled trades and supervisory roles, plus HR formalization for growing plants.</p></article>
+      <article class="card reveal"><h3>Education</h3>
+        <p>Academic and administrative recruitment with rigorous credential verification.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────── RESULTS ─────────── -->
+<section id="results" class="section-alt" aria-labelledby="resultsTitle">
+  <div class="wrap">
+    <p class="kicker k-neutral">Results</p>
+    <h2 id="resultsTitle">Anonymized case highlights</h2>
+    <div class="grid-4" style="margin-top:2rem">
+      <article class="stat-card reveal">
+        <span class="figure">15 roles<span style="font-size:.5em"> / 5 weeks</span></span>
+        <p>Filled for a commercial bank's branch expansion — with a 90% probation pass rate.</p>
+        <span class="line-tag t-services">Services engagement</span>
+      </article>
+      <article class="stat-card reveal">
+        <span class="figure">~TZS 4M<span style="font-size:.5em"> saved / month</span></span>
+        <p>A 120-staff manufacturer moved onto a formal HR system, versus the cost of an
+           internal HR Director.</p>
+        <span class="line-tag t-services">Services engagement</span>
+      </article>
+      <article class="stat-card reveal">
+        <span class="figure">7 of 8<span style="font-size:.5em"> roles</span></span>
+        <p>NGO programme roles filled inside an 8-week donor deadline.</p>
+        <span class="line-tag t-services">Services engagement</span>
+      </article>
+      <article class="stat-card reveal">
+        <span class="figure">4 lecturers<span style="font-size:.5em"> · 0 rejections</span></span>
+        <p>University lecturer roles filled before the academic year, with zero credential
+           rejections.</p>
+        <span class="line-tag t-services">Services engagement</span>
+      </article>
+    </div>
+    <p class="ref-note">Named client references available on request.</p>
+  </div>
+</section>
+
+<!-- ─────────── TALENT PIPELINE ─────────── -->
+<section id="pipeline" aria-labelledby="pipelineTitle">
+  <div class="wrap">
+    <p class="kicker k-neutral">Talent pipeline</p>
+    <h2 id="pipelineTitle">Two sourcing streams, one verified database</h2>
+    <p class="lead">We build supply before demand arrives, so shortlists come from a pool we
+       already know.</p>
+    <div class="pipeline">
+      <article class="card reveal">
+        <h3>Universities &amp; colleges</h3>
+        <ul>
+          <li>MOUs with universities and colleges</li>
+          <li>Career fairs and on-campus events</li>
+          <li>Internship-to-hire programmes</li>
+          <li>Campus Ambassador network</li>
+        </ul>
+      </article>
+      <article class="card reveal">
+        <h3>Smaller communities &amp; trades</h3>
+        <ul>
+          <li>VETA (vocational training) partnerships</li>
+          <li>Trade association relationships</li>
+          <li>Mobile registration drives</li>
+        </ul>
+      </article>
+    </div>
+    <div class="pipeline-note reveal">
+      <span class="line-tag t-services">Services differentiator</span>
+      <p style="margin:.6rem 0 0">Both streams feed one verified candidate database.
+      <strong style="color:var(--text)">Access to this pool is part of our Services line</strong> —
+      it is what our recruiters search on your behalf. It is not a feature of the HMS software
+      subscription.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────── CANDIDATE REGISTRATION ─────────── -->
+<section id="candidates" class="section-alt" aria-labelledby="candTitle">
+  <div class="wrap">
+    <p class="kicker k-neutral">For candidates</p>
+    <h2 id="candTitle">Join the talent pool</h2>
+    <p class="lead">Register once. When a role matches your profile, our team contacts you directly.
+       Registration is free for candidates.</p>
+
+    <!-- Candidate form. Endpoint is a placeholder — swap FORM_ENDPOINT in the JS config. -->
+    <form id="candidateForm" novalidate>
+      <div class="form-grid">
+        <div class="field">
+          <label for="cName">Full name <span class="req" aria-hidden="true">*</span></label>
+          <input type="text" id="cName" name="name" autocomplete="name" required>
+          <span class="field-error" aria-live="polite"></span>
+        </div>
+        <div class="field">
+          <label for="cEmail">Email <span class="req" aria-hidden="true">*</span></label>
+          <input type="email" id="cEmail" name="email" autocomplete="email" required>
+          <span class="field-error" aria-live="polite"></span>
+        </div>
+        <div class="field">
+          <label for="cPhone">Phone <span class="req" aria-hidden="true">*</span></label>
+          <input type="tel" id="cPhone" name="phone" autocomplete="tel" placeholder="+255 …" required>
+          <span class="field-error" aria-live="polite"></span>
+        </div>
+        <div class="field">
+          <label for="cField">Field of study or trade <span class="req" aria-hidden="true">*</span></label>
+          <input type="text" id="cField" name="field" required>
+          <span class="field-error" aria-live="polite"></span>
+        </div>
+        <div class="field">
+          <label for="cLocation">Location <span class="req" aria-hidden="true">*</span></label>
+          <input type="text" id="cLocation" name="location" placeholder="e.g. Dar es Salaam" required>
+          <span class="field-error" aria-live="polite"></span>
+        </div>
+        <div class="field">
+          <label for="cSector">Sector interest <span class="req" aria-hidden="true">*</span></label>
+          <select id="cSector" name="sector" required>
+            <option value="">Select a sector…</option>
+            <option>Banking &amp; Financial Services</option>
+            <option>NGOs &amp; International Development</option>
+            <option>Manufacturing &amp; Private Sector</option>
+            <option>Education</option>
+            <option>Other</option>
+          </select>
+          <span class="field-error" aria-live="polite"></span>
+        </div>
+        <div class="field">
+          <label for="cAvail">Availability <span class="req" aria-hidden="true">*</span></label>
+          <select id="cAvail" name="availability" required>
+            <option value="">Select availability…</option>
+            <option>Available immediately</option>
+            <option>Within 1 month</option>
+            <option>Within 3 months</option>
+            <option>Exploring opportunities</option>
+          </select>
+          <span class="field-error" aria-live="polite"></span>
+        </div>
+        <div class="field consent">
+          <input type="checkbox" id="cConsent" name="consent" required>
+          <label for="cConsent" style="font-weight:400">
+            I consent to Kazi Connect storing and processing this information to match me with
+            employment opportunities, in line with the
+            <a href="#legal-pdpa">Data Protection notice</a> and Tanzania's Personal Data
+            Protection Act (2022). I understand I can request removal of my data at any time.
+            <span class="req" aria-hidden="true">*</span>
+          </label>
+          <span class="field-error" aria-live="polite"></span>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-services" style="margin-top:1.2rem">Register</button>
+      <p class="form-status" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
+<!-- ─────────── ABOUT ─────────── -->
+<section id="about" aria-labelledby="aboutTitle">
+  <div class="wrap">
+    <p class="kicker k-neutral">About</p>
+    <h2 id="aboutTitle">Why one company sells both</h2>
+    <div class="about-grid">
+      <div>
+        <p class="lead" style="max-width:none">
+          Kazi Connect was founded in Dar es Salaam by
+          <strong style="color:var(--text)">Emmanuel Enock Macha (Eddie)</strong>, who brings an
+          unusual pairing: a background in International Relations &amp; Diplomacy, and hands-on
+          software development — Eddie built the Kazi Connect HMS platform in-house.
+        </p>
+        <p style="color:var(--text-2)">
+          That dual capability is exactly why the company has two lines. The relationships,
+          negotiation, and institutional trust from the diplomacy side built the recruitment and
+          HR services practice. The engineering side built the platform those services run on.
+          When clients began asking to use the platform themselves, selling it became the natural
+          second line — software proven daily by our own recruiters, not built on speculation.
+        </p>
+        <p style="color:var(--text-2)">
+          Services generate revenue and market insight today; the software carries that insight
+          to companies who prefer to hire in-house. One engine, two ways to use it.
+        </p>
+      </div>
+      <aside class="founder-card reveal" aria-label="Founder">
+        <div class="founder-avatar" aria-hidden="true">EM</div>
+        <h3>Emmanuel Enock Macha</h3>
+        <p class="role">Founder &amp; Managing Director — "Eddie"</p>
+        <div class="chips">
+          <span class="chip">International Relations &amp; Diplomacy</span>
+          <span class="chip">Software development</span>
+          <span class="chip">Built HMS in-house</span>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────── CONTACT ─────────── -->
+<section id="contact" class="section-alt" aria-labelledby="contactTitle">
+  <div class="wrap">
+    <p class="kicker k-neutral">Contact</p>
+    <h2 id="contactTitle">Talk to us</h2>
+    <div class="contact-grid">
+      <div>
+        <p class="lead">Whether you need a hiring team or hiring software, start with a short
+           conversation. We reply within one business day.</p>
+        <address>
+          <p><strong>Kazi Connect</strong><br>
+          Dar es Salaam, Tanzania</p>
+          <p>Email: <a href="mailto:emmanuelmacha123@gmail.com">emmanuelmacha123@gmail.com</a></p>
+        </address>
+      </div>
+      <!-- Enquiry form. Endpoint is a placeholder — swap FORM_ENDPOINT in the JS config. -->
+      <form id="contactForm" novalidate>
+        <div class="form-grid">
+          <div class="field">
+            <label for="qName">Name <span class="req" aria-hidden="true">*</span></label>
+            <input type="text" id="qName" name="name" autocomplete="name" required>
+            <span class="field-error" aria-live="polite"></span>
+          </div>
+          <div class="field">
+            <label for="qEmail">Email <span class="req" aria-hidden="true">*</span></label>
+            <input type="email" id="qEmail" name="email" autocomplete="email" required>
+            <span class="field-error" aria-live="polite"></span>
+          </div>
+          <div class="field full">
+            <label for="qOrg">Organization</label>
+            <input type="text" id="qOrg" name="organization" autocomplete="organization">
+            <span class="field-error" aria-live="polite"></span>
+          </div>
+          <div class="field full">
+            <label for="qInterest">I'm interested in <span class="req" aria-hidden="true">*</span></label>
+            <select id="qInterest" name="interest" required>
+              <option value="">Select one…</option>
+              <option>Recruitment &amp; HR Services (done-for-you)</option>
+              <option>Kazi Connect HMS software (self-serve)</option>
+              <option>Not sure — help me choose</option>
+              <option>Something else</option>
+            </select>
+            <span class="field-error" aria-live="polite"></span>
+          </div>
+          <div class="field full">
+            <label for="qMsg">Message <span class="req" aria-hidden="true">*</span></label>
+            <textarea id="qMsg" name="message" required></textarea>
+            <span class="field-error" aria-live="polite"></span>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-services" style="margin-top:1.2rem">Send enquiry</button>
+        <p class="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────── LEGAL (real pages, in-file) ─────────── -->
+<section id="legal" class="legal" aria-labelledby="legalTitle">
+  <div class="wrap">
+    <p class="kicker k-neutral">Legal</p>
+    <h2 id="legalTitle">Privacy, terms &amp; data protection</h2>
+
+    <details id="legal-privacy">
+      <summary>Privacy Policy</summary>
+      <div class="legal-body">
+        <p><strong>What we collect.</strong> When you register as a candidate or send an enquiry we
+        collect the information you provide: name, contact details, field of study or trade,
+        location, sector interest, and availability. We do not buy or scrape personal data.</p>
+        <p><strong>How we use it.</strong> Candidate data is used solely to match you with
+        employment opportunities and to contact you about them. Enquiry data is used to respond
+        to your request. We do not sell personal data to third parties. Candidate profiles are
+        shared with a hiring client only when your profile is being considered for a specific role.</p>
+        <p><strong>Retention and removal.</strong> You may request a copy, correction, or deletion
+        of your data at any time by emailing
+        <a href="mailto:emmanuelmacha123@gmail.com">emmanuelmacha123@gmail.com</a>. Removal
+        requests are actioned within 30 days.</p>
+      </div>
+    </details>
+
+    <details id="legal-terms">
+      <summary>Terms of Service</summary>
+      <div class="legal-body">
+        <p><strong>Services engagements</strong> are governed by a signed engagement letter that
+        specifies scope, tier, SLAs, and monthly fees in Tanzanian Shillings. Either party may
+        terminate with 30 days' written notice unless the engagement letter states otherwise.</p>
+        <p><strong>HMS subscriptions</strong> are billed annually in US Dollars per the plan
+        selected. Subscription fees are non-refundable once a billing year begins, except where
+        required by law. Fair-use limits (job posts, team members) follow the published plan.</p>
+        <p><strong>General.</strong> Content on this site is provided for information and does not
+        constitute legal or financial advice. Case results describe specific past engagements and
+        do not guarantee future outcomes. These terms are governed by the laws of the United
+        Republic of Tanzania.</p>
+      </div>
+    </details>
+
+    <details id="legal-pdpa">
+      <summary>Data Protection — Tanzania PDPA (2022)</summary>
+      <div class="legal-body">
+        <p>Kazi Connect processes personal data in accordance with Tanzania's
+        <strong>Personal Data Protection Act, 2022</strong> and its regulations. In practice this
+        means: we collect data with your consent for a stated purpose; we use it only for that
+        purpose; access inside our team is role-based; and you have the right to access, correct,
+        or request erasure of your data.</p>
+        <p>Candidate records are stored in the Kazi Connect HMS platform with role-based access
+        controls. HMS subscription customers are independent controllers of the candidate data
+        they collect through their own hiring; the platform provides the access controls and
+        deletion tooling to support their PDPA obligations.</p>
+        <p>To exercise any data right, email
+        <a href="mailto:emmanuelmacha123@gmail.com">emmanuelmacha123@gmail.com</a> with the
+        subject "Data request".</p>
+      </div>
+    </details>
+  </div>
+</section>
+</main>
+
+<!-- ============================================================
+     INVESTOR GATE — code entry (not linked in section nav;
+     robots meta is switched to noindex while investor view is open)
+     ============================================================ -->
+<div id="gateView" data-view="gate" hidden>
+  <section class="gate" aria-labelledby="gateTitle">
+    <form class="gate-card" id="gateForm" novalidate>
+      <p class="kicker k-software">Investor access</p>
+      <h2 id="gateTitle" style="font-size:1.5rem">Enter access code</h2>
+      <p>This area contains company financials and is shared with invited investors only.
+         Request a code via the contact form.</p>
+      <div class="field">
+        <label for="gateCode">Access code</label>
+        <input type="text" id="gateCode" name="code" autocomplete="off" autocapitalize="characters">
+        <span class="field-error" aria-live="polite" id="gateError"></span>
+      </div>
+      <div style="display:flex;gap:.7rem;margin-top:1.1rem;flex-wrap:wrap">
+        <button type="submit" class="btn btn-software">Unlock</button>
+        <button type="button" class="btn btn-outline" data-back-main>Back to site</button>
+      </div>
+    </form>
+  </section>
+</div>
+
+<!-- ============================================================
+     INVESTOR VIEW (gated)
+     ============================================================ -->
+<div id="investorView" data-view="investor" hidden>
+
+  <!-- Investor hero: the thesis -->
+  <section class="inv-hero" aria-labelledby="invTitle">
+    <div class="wrap">
+      <p class="kicker k-neutral">Investor briefing · Confidential</p>
+      <h1 id="invTitle" style="max-width:22ch">Services pay for today. The platform is the upside.</h1>
+      <p class="lead">
+        Kazi Connect's dual model is the investment thesis. The recruitment and HR services line
+        generates revenue now and funds platform development. Kazi Connect HMS — proven daily by
+        our own recruiters — is the scale and margin story: software that sells cross-border in
+        USD, on top of a services business that already pays its way.
+      </p>
+
+      <!-- The ask -->
+      <div class="ask-box reveal">
+        <p class="kicker k-services" style="margin-bottom:.4rem">The ask</p>
+        <p class="figure">TZS 50,000,000</p>
+        <p style="color:var(--text-2);margin:0">
+          Raise range TZS 50,000,000 – 150,000,000. Structure open — equity, convertible note,
+          or revenue-share. Use of funds detailed below.
+        </p>
+      </div>
+
+      <!-- Headline stats -->
+      <div class="inv-stats">
+        <div class="inv-stat reveal"><span class="figure">65%</span><p>Gross margin (Services line)</p></div>
+        <div class="inv-stat reveal"><span class="figure">49</span><p>Services clients by Year 3</p></div>
+        <div class="inv-stat reveal"><span class="figure">TZS 1.31B</span><p>ARR by Year 3</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Financials -->
+  <section class="section-alt" aria-labelledby="finTitle">
+    <div class="wrap">
+      <p class="kicker k-services">Financial projections</p>
+      <h2 id="finTitle">Three-year outlook — Services line only</h2>
+      <p class="lead">
+        These projections cover the <strong style="color:var(--text)">Services line only</strong>.
+        SaaS subscription revenue from HMS is upside not yet modeled — deliberately, so the
+        base case stands on the proven line.
+      </p>
+
+      <div class="table-wrap reveal" style="margin-top:1.6rem">
+        <table>
+          <caption>Projected Services-line financials. All monetary figures in Tanzanian Shillings (TZS).</caption>
+          <thead>
+            <tr><th scope="col">Metric</th>
+                <th scope="col" class="num-cell">Year 1</th>
+                <th scope="col" class="num-cell">Year 2</th>
+                <th scope="col" class="num-cell">Year 3</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Revenue (TZS)</th>
+                <td class="num-cell">243,375,000</td>
+                <td class="num-cell">823,500,000</td>
+                <td class="num-cell">1,227,375,000</td></tr>
+            <tr><th scope="row">EBITDA (TZS)</th>
+                <td class="num-cell">113,793,750</td>
+                <td class="num-cell">415,875,000</td>
+                <td class="num-cell">602,193,750</td></tr>
+            <tr><th scope="row">EBITDA margin</th>
+                <td class="num-cell">47%</td>
+                <td class="num-cell">51%</td>
+                <td class="num-cell">49%</td></tr>
+            <tr><th scope="row">Active clients</th>
+                <td class="num-cell">21</td>
+                <td class="num-cell">43</td>
+                <td class="num-cell">49</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Charts (Chart.js). Data mirrors the table above; the table is the accessible fallback. -->
+      <div class="chart-grid">
+        <div class="chart-card reveal">
+          <h3>Projected revenue by year — Services line (TZS)</h3>
+          <div class="chart-box"><canvas id="revenueChart" role="img"
+            aria-label="Bar chart of projected Services revenue: Year 1 TZS 243.4 million, Year 2 TZS 823.5 million, Year 3 TZS 1,227.4 million."></canvas></div>
+          <p class="chart-fallback" id="revenueFallback" hidden>
+            Chart unavailable offline — see the table above for the same figures.</p>
+        </div>
+        <div class="chart-card reveal">
+          <h3>Use of funds</h3>
+          <div class="chart-box" style="height:240px"><canvas id="fundsChart" role="img"
+            aria-label="Doughnut chart of use of funds: Technology and HMS 30%, Team expansion 25%, Marketing and business development 25%, Working capital 15%, Compliance and regional 5%."></canvas></div>
+          <!-- HTML legend doubles as the accessible / low-contrast-relief listing -->
+          <ul class="chart-legend" id="fundsLegend">
+            <li><span class="swatch" style="background:#C25E3A"></span>Technology &amp; HMS<span class="pct">30%</span></li>
+            <li><span class="swatch" style="background:#4A90D9"></span>Team expansion<span class="pct">25%</span></li>
+            <li><span class="swatch" style="background:#BE8A26"></span>Marketing &amp; BD<span class="pct">25%</span></li>
+            <li><span class="swatch" style="background:#22A79E"></span>Working capital<span class="pct">15%</span></li>
+            <li><span class="swatch" style="background:#9C5AA8"></span>Compliance &amp; regional<span class="pct">5%</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Roadmap -->
+  <section aria-labelledby="roadTitle">
+    <div class="wrap">
+      <p class="kicker k-neutral">Roadmap</p>
+      <h2 id="roadTitle">Five phases</h2>
+      <ol class="roadmap">
+        <li class="reveal"><span class="dot" aria-hidden="true">1</span>
+          <h3>Foundation <span class="when">Months 1–6</span></h3>
+          <p>Core team hired, first-cohort clients onboarded, delivery playbooks written, HMS in
+             daily internal use.</p></li>
+        <li class="reveal"><span class="dot" aria-hidden="true">2</span>
+          <h3>Systemize <span class="when">Months 7–12</span></h3>
+          <p>Processes documented and delegated; quality no longer depends on the founder in every
+             engagement. SLA reporting standardized.</p></li>
+        <li class="reveal"><span class="dot" aria-hidden="true">3</span>
+          <h3>Expand Tanzania <span class="when">Year 2</span></h3>
+          <p>Mwanza and Arusha presence; sector teams deepen in banking, NGO, manufacturing, and
+             education.</p></li>
+        <li class="saas reveal"><span class="dot" aria-hidden="true">4</span>
+          <h3>Raise &amp; Build — HMS v2 <span class="when">Years 2–3</span><span class="saas-chip">SaaS line scales here</span></h3>
+          <p>This raise funds HMS v2: self-serve onboarding, billing, and the analytics suite.
+             External subscriptions open beyond the pilot cohort — the software line begins
+             compounding on top of services revenue.</p></li>
+        <li class="saas reveal"><span class="dot" aria-hidden="true">5</span>
+          <h3>EAC entry via licensing <span class="when">Year 3+</span><span class="saas-chip">SaaS line scales here</span></h3>
+          <p>East African Community expansion through licensing partners — the platform crosses
+             borders as software, without replicating the services headcount in each market.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Risks -->
+  <section class="section-alt" aria-labelledby="riskTitle">
+    <div class="wrap">
+      <p class="kicker k-neutral">Risks</p>
+      <h2 id="riskTitle">Risks &amp; mitigations, stated plainly</h2>
+      <div class="table-wrap reveal" style="margin-top:1.6rem">
+        <table>
+          <thead>
+            <tr><th scope="col">Risk</th><th scope="col">Mitigation</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Founder dependency — delivery and product both trace to one person</th>
+                <td>Phase 2 exists for this reason: documented playbooks, an operations lead hire,
+                    and HR Partners who own client relationships directly.</td></tr>
+            <tr><th scope="row">Client concentration in early cohorts</th>
+                <td>Four-sector focus caps exposure; no single client above 15% of revenue as a
+                    standing policy from Year 2.</td></tr>
+            <tr><th scope="row">Receivables risk — NGO and corporate payment cycles run long</th>
+                <td>Deposits on engagement, milestone billing, and 15% of the raise held as
+                    working capital.</td></tr>
+            <tr><th scope="row">Labor-law and regulatory change</th>
+                <td>Compliance monitoring is a paid service we sell — the same watch we keep for
+                    Enterprise clients protects our own contracts.</td></tr>
+            <tr><th scope="row">SaaS execution risk — services firms often fail to become software companies</th>
+                <td>HMS is not speculative: it already runs every services engagement. The raise
+                    funds packaging and go-to-market, not a first build.</td></tr>
+            <tr><th scope="row">Competition from regional job boards and global ATS products</th>
+                <td>Local moat: verified candidate database, Tanzanian labor-law workflows, and
+                    TZS-market pricing that global products don't serve.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Document request -->
+  <section aria-labelledby="docTitle">
+    <div class="wrap">
+      <p class="kicker k-neutral">Next step</p>
+      <h2 id="docTitle">Request the full documents</h2>
+      <p class="lead">The complete business plan, financial model, and pitch deck are shared under
+         NDA. Tell us who you are and what you'd like to see.</p>
+      <!-- Endpoint is a placeholder — swap FORM_ENDPOINT in the JS config. -->
+      <form id="investorForm" novalidate style="max-width:720px">
+        <div class="form-grid">
+          <div class="field">
+            <label for="iName">Name <span class="req" aria-hidden="true">*</span></label>
+            <input type="text" id="iName" name="name" autocomplete="name" required>
+            <span class="field-error" aria-live="polite"></span>
+          </div>
+          <div class="field">
+            <label for="iEmail">Email <span class="req" aria-hidden="true">*</span></label>
+            <input type="email" id="iEmail" name="email" autocomplete="email" required>
+            <span class="field-error" aria-live="polite"></span>
+          </div>
+          <div class="field full">
+            <label for="iOrg">Organization / fund <span class="req" aria-hidden="true">*</span></label>
+            <input type="text" id="iOrg" name="organization" autocomplete="organization" required>
+            <span class="field-error" aria-live="polite"></span>
+          </div>
+          <div class="field full">
+            <label for="iDocs">Documents requested <span class="req" aria-hidden="true">*</span></label>
+            <select id="iDocs" name="documents" required>
+              <option value="">Select…</option>
+              <option>Full business plan</option>
+              <option>Financial model (spreadsheet)</option>
+              <option>Pitch deck</option>
+              <option>All of the above</option>
+            </select>
+            <span class="field-error" aria-live="polite"></span>
+          </div>
+          <div class="field full">
+            <label for="iMsg">Message</label>
+            <textarea id="iMsg" name="message"></textarea>
+            <span class="field-error" aria-live="polite"></span>
+          </div>
+        </div>
+        <div style="display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1.2rem">
+          <button type="submit" class="btn btn-services">Request documents</button>
+          <a class="btn btn-outline" href="mailto:emmanuelmacha123@gmail.com?subject=Investor%20conversation%20—%20Kazi%20Connect">Email Eddie directly</a>
+        </div>
+        <p class="form-status" role="status" aria-live="polite"></p>
+      </form>
+      <p style="margin-top:2.5rem"><button class="btn btn-outline" data-back-main>← Back to main site</button></p>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================
+     FOOTER (shared)
+     ============================================================ -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div style="max-width:340px">
+        <a class="logo" href="#top" data-nav style="font-size:1.15rem">
+          <span class="logo-mark" aria-hidden="true">K</span> Kazi&nbsp;Connect</a>
+        <p style="margin-top:.8rem">Recruitment &amp; HR services — and the hiring platform behind
+           them. Dar es Salaam, Tanzania.</p>
+      </div>
+      <nav aria-label="Footer — company">
+        <strong style="color:var(--text)">Company</strong>
+        <ul>
+          <li><a href="#services" data-nav>Recruitment &amp; HR Services</a></li>
+          <li><a href="#software" data-nav>Kazi Connect HMS</a></li>
+          <li><a href="#results" data-nav>Results</a></li>
+          <li><a href="#about" data-nav>About</a></li>
+          <li><a href="#contact" data-nav>Contact</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Footer — platform">
+        <strong style="color:var(--text)">Platform</strong>
+        <ul>
+          <li><a href="https://afrikakazihms.netlify.app/dashboard.html">HMS Dashboard (sign in)</a></li>
+          <li><a href="https://afrikakazihms.netlify.app/HMS_Registration_Portal.html">Registration Portal</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Footer — legal">
+        <strong style="color:var(--text)">Legal</strong>
+        <ul>
+          <li><a href="#legal-privacy" data-legal>Privacy Policy</a></li>
+          <li><a href="#legal-terms" data-legal>Terms of Service</a></li>
+          <li><a href="#legal-pdpa" data-legal>Data Protection (PDPA 2022)</a></li>
+        </ul>
+      </nav>
+    </div>
+    <p class="footer-line">© <span id="year">2026</span> Kazi Connect. Dar es Salaam, Tanzania.
+       Personal data is handled under Tanzania's Personal Data Protection Act (2022).</p>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   APP SCRIPT — no storage APIs; all state is in-memory only.
+   Config you will likely edit is at the top.
+   ============================================================ */
+(function () {
+  'use strict';
+
+  /* ---------- CONFIG (edit me) ---------- */
+  // Swap for your real form endpoint (expects JSON POST).
+  var FORM_ENDPOINT = 'https://example.com/api/kazi-connect/forms'; // ← PLACEHOLDER
+  // Investor gate code. Change before sharing the page.
+  var INVESTOR_ACCESS_CODE = 'KAZI2026';
+
+  var doc = document.documentElement;
+  var $  = function (s, c) { return (c || document).querySelector(s); };
+  var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
+
+  /* ============================================================
+     THEME TOGGLE — in-memory only (resets on reload by design)
+     ============================================================ */
+  var theme = 'dark';
+  var themeBtn = $('#themeToggle');
+  function applyTheme() {
+    doc.setAttribute('data-theme', theme);
+    var toLight = theme === 'dark';
+    themeBtn.textContent = toLight ? '☀' : '☾';
+    themeBtn.setAttribute('aria-label', toLight ? 'Switch to light theme' : 'Switch to dark theme');
+    themeBtn.setAttribute('aria-pressed', String(!toLight));
+    var metaTheme = $('meta[name="theme-color"]');
+    if (metaTheme) metaTheme.setAttribute('content', toLight ? '#1B2D2A' : '#FBF8F1');
+    restyleCharts();
+  }
+  themeBtn.addEventListener('click', function () {
+    theme = theme === 'dark' ? 'light' : 'dark';
+    applyTheme();
+  });
+
+  /* ============================================================
+     VIEW SWITCHING — main / gate / investor
+     ============================================================ */
+  var views = { main: $('#main'), gate: $('#gateView'), investor: $('#investorView') };
+  var robotsMeta = $('#robotsMeta');
+  var currentView = 'main';
+
+  function showView(name) {
+    currentView = name;
+    Object.keys(views).forEach(function (k) { views[k].hidden = (k !== name); });
+    // Investor content is excluded from crawling while visible.
+    robotsMeta.setAttribute('content', name === 'investor' ? 'noindex,nofollow' : 'index,follow');
+    window.scrollTo(0, 0);
+    if (name === 'gate') { $('#gateCode').focus(); }
+    if (name === 'investor') {
+      var t = $('#invTitle');
+      t.setAttribute('tabindex', '-1');
+      t.focus();
+      initCharts();
+      revealScan();
+    }
+  }
+
+  $('#investorLink').addEventListener('click', function () { showView('gate'); });
+  $('#investorLinkMobile').addEventListener('click', function (e) {
+    e.preventDefault(); closeMenu(); showView('gate');
+  });
+  $$('[data-back-main]').forEach(function (b) {
+    b.addEventListener('click', function () { showView('main'); });
+  });
+
+  /* Investor gate */
+  $('#gateForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var input = $('#gateCode'), err = $('#gateError');
+    if (input.value.trim().toUpperCase() === INVESTOR_ACCESS_CODE) {
+      err.textContent = ''; input.removeAttribute('aria-invalid');
+      input.value = '';
+      showView('investor');
+    } else {
+      err.textContent = 'That code was not recognized. Request access via the contact form.';
+      input.setAttribute('aria-invalid', 'true');
+      input.focus();
+    }
+  });
+
+  /* ============================================================
+     NAV — mobile menu, section links, active highlighting
+     ============================================================ */
+  var burger = $('#navBurger'), navLinks = $('#navLinks');
+  function closeMenu() { navLinks.classList.remove('open'); burger.setAttribute('aria-expanded', 'false'); }
+  burger.addEventListener('click', function () {
+    var open = navLinks.classList.toggle('open');
+    burger.setAttribute('aria-expanded', String(open));
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
+
+  // Any in-page link: if we're on gate/investor view, return to main first.
+  $$('a[data-nav], a[data-legal]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      var id = a.getAttribute('href');
+      if (!id || id.charAt(0) !== '#') return;
+      closeMenu();
+      if (currentView !== 'main') {
+        e.preventDefault();
+        showView('main');
+        var t = $(id);
+        if (t) { openIfLegal(t); t.scrollIntoView(); }
+      } else {
+        var target = $(id);
+        if (target) openIfLegal(target);
+      }
+    });
+  });
+  // Footer legal links open their <details> so the target is visible.
+  function openIfLegal(el) {
+    if (el.tagName === 'DETAILS') el.open = true;
+    var parent = el.closest && el.closest('details');
+    if (parent) parent.open = true;
+  }
+  window.addEventListener('hashchange', function () {
+    var t = $(location.hash || '#x');
+    if (t) openIfLegal(t);
+  });
+
+  // Active-section highlighting
+  var sectionIds = ['services', 'software', 'sectors', 'results', 'about', 'contact'];
+  var navById = {};
+  $$('#navLinks a[data-nav]').forEach(function (a) {
+    navById[a.getAttribute('href').slice(1)] = a;
+  });
+  if ('IntersectionObserver' in window) {
+    var activeObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          Object.keys(navById).forEach(function (k) { navById[k].removeAttribute('aria-current'); });
+          var link = navById[en.target.id];
+          if (link) link.setAttribute('aria-current', 'true');
+        }
+      });
+    }, { rootMargin: '-35% 0px -55% 0px' });
+    sectionIds.forEach(function (id) { var s = $('#' + id); if (s) activeObs.observe(s); });
+  }
+
+  /* ============================================================
+     REVEAL-ON-SCROLL (IntersectionObserver fade-ins)
+     ============================================================ */
+  var revealObs = null;
+  if ('IntersectionObserver' in window &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    revealObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add('visible'); revealObs.unobserve(en.target); }
+      });
+    }, { threshold: 0.12 });
+  }
+  function revealScan() {
+    $$('.reveal').forEach(function (el) {
+      if (el.classList.contains('visible')) return;
+      if (revealObs && !el.closest('[hidden]')) revealObs.observe(el);
+      else if (!revealObs) el.classList.add('visible');
+    });
+  }
+  revealScan();
+
+  /* ============================================================
+     FORMS — client-side validation + POST to placeholder endpoint
+     ============================================================ */
+  function validateField(field) {
+    var input = field.querySelector('input, select, textarea');
+    var err = field.querySelector('.field-error');
+    if (!input || !err) return true;
+    var msg = '';
+    if (input.required) {
+      if (input.type === 'checkbox' && !input.checked) msg = 'Consent is required to register.';
+      else if (input.type !== 'checkbox' && !input.value.trim()) msg = 'This field is required.';
+    }
+    if (!msg && input.type === 'email' && input.value.trim() &&
+        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim())) msg = 'Enter a valid email address.';
+    if (!msg && input.type === 'tel' && input.value.trim() &&
+        !/^[+\d][\d\s\-()]{6,}$/.test(input.value.trim())) msg = 'Enter a valid phone number.';
+    err.textContent = msg;
+    if (msg) input.setAttribute('aria-invalid', 'true');
+    else input.removeAttribute('aria-invalid');
+    return !msg;
+  }
+
+  function wireForm(formId, formName) {
+    var form = $('#' + formId);
+    if (!form) return;
+    var status = form.querySelector('.form-status');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var fields = $$('.field', form);
+      var ok = true, firstBad = null;
+      fields.forEach(function (f) {
+        if (!validateField(f)) {
+          ok = false;
+          if (!firstBad) firstBad = f.querySelector('input,select,textarea');
+        }
+      });
+      if (!ok) {
+        status.className = 'form-status err';
+        status.textContent = 'Please correct the highlighted fields.';
+        if (firstBad) firstBad.focus();
+        return;
+      }
+      var data = { form: formName, submittedAt: new Date().toISOString() };
+      $$('input, select, textarea', form).forEach(function (i) {
+        if (!i.name) return;
+        data[i.name] = i.type === 'checkbox' ? i.checked : i.value.trim();
+      });
+      status.className = 'form-status';
+      status.textContent = 'Sending…';
+      fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      }).then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        status.className = 'form-status ok';
+        status.textContent = 'Thank you — we\'ve received your submission and will be in touch.';
+        form.reset();
+      }).catch(function () {
+        status.className = 'form-status err';
+        status.textContent = 'Could not submit right now (form endpoint not configured). ' +
+          'Please email emmanuelmacha123@gmail.com instead.';
+      });
+    });
+    // Clear errors as the user fixes fields
+    form.addEventListener('input', function (e) {
+      var f = e.target.closest('.field');
+      if (f && f.querySelector('.field-error').textContent) validateField(f);
+    });
+  }
+  wireForm('candidateForm', 'candidate-registration');
+  wireForm('contactForm', 'enquiry');
+  wireForm('investorForm', 'investor-document-request');
+
+  /* ============================================================
+     CHARTS (Chart.js) — created on investor unlock; theme-aware.
+     Colors below were validated for CVD separation & contrast.
+     ============================================================ */
+  var revenueChart = null, fundsChart = null;
+
+  function chartInk() {
+    var light = doc.getAttribute('data-theme') === 'light';
+    return {
+      tick: light ? '#5F6B66' : '#AFBCB6',
+      grid: light ? 'rgba(35,43,41,.12)' : 'rgba(244,239,228,.12)',
+      surface: light ? '#FFFFFF' : '#22332F'
+    };
+  }
+
+  function initCharts() {
+    if (typeof window.Chart === 'undefined') {
+      var fb = $('#revenueFallback');
+      if (fb) fb.hidden = false;
+      return;
+    }
+    if (revenueChart) return; // already built
+    var ink = chartInk();
+    var fmtTZS = function (v) { return 'TZS ' + Number(v).toLocaleString('en-US'); };
+
+    // Bar — single series, brand terracotta, thin marks, rounded data-end
+    revenueChart = new Chart($('#revenueChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Year 1', 'Year 2', 'Year 3'],
+        datasets: [{
+          label: 'Revenue (TZS)',
+          data: [243375000, 823500000, 1227375000],
+          backgroundColor: '#C25E3A',
+          borderRadius: { topLeft: 4, topRight: 4 },
+          barPercentage: 0.55,
+          categoryPercentage: 0.8
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false }, // single series — title names it
+          tooltip: { callbacks: { label: function (c) { return fmtTZS(c.parsed.y); } } }
+        },
+        scales: {
+          x: { grid: { display: false }, ticks: { color: ink.tick } },
+          y: {
+            grid: { color: ink.grid }, border: { display: false },
+            ticks: {
+              color: ink.tick,
+              callback: function (v) { return (v / 1e6).toLocaleString('en-US') + 'M'; }
+            }
+          }
+        }
+      }
+    });
+
+    // Doughnut — 5 slices, CVD-validated order, 2px surface gaps,
+    // HTML legend beside it carries labels + percentages (relief).
+    fundsChart = new Chart($('#fundsChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Technology & HMS', 'Team expansion', 'Marketing & BD', 'Working capital', 'Compliance & regional'],
+        datasets: [{
+          data: [30, 25, 25, 15, 5],
+          backgroundColor: ['#C25E3A', '#4A90D9', '#BE8A26', '#22A79E', '#9C5AA8'],
+          borderColor: ink.surface,
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false, cutout: '62%',
+        plugins: {
+          legend: { display: false }, // HTML legend below the canvas
+          tooltip: { callbacks: { label: function (c) { return c.label + ': ' + c.parsed + '%'; } } }
+        }
+      }
+    });
+  }
+
+  function restyleCharts() {
+    if (!revenueChart) return;
+    var ink = chartInk();
+    revenueChart.options.scales.x.ticks.color = ink.tick;
+    revenueChart.options.scales.y.ticks.color = ink.tick;
+    revenueChart.options.scales.y.grid.color = ink.grid;
+    revenueChart.update();
+    fundsChart.data.datasets[0].borderColor = ink.surface;
+    fundsChart.update();
+  }
+
+  /* ---------- Misc ---------- */
+  $('#year').textContent = String(new Date().getFullYear());
+})();
+</script>
+</body>
+</html>
