@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kazi Connect | Hiring Management System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563EB;
+            --primary-dark: #1D4ED8;
+            --primary-light: #EFF6FF;
+            --accent: #F59E0B;
+            --accent-dark: #D97706;
+            --dark: #0F172A;
+            --dark-2: #1E293B;
+            --muted: #64748B;
+            --border: #E2E8F0;
+            --bg: #F8FAFC;
+            --white: #FFFFFF;
+            --success: #10B981;
+            --radius: 12px;
+            --radius-sm: 8px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.1);
+            --shadow-lg: 0 12px 40px rgba(0,0,0,0.14);
+            --transition: all 0.2s ease;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; color: var(--dark); background: var(--white); line-height: 1.6; font-size: 16px; }
+        h1, h2, h3, h4 { font-family: 'Raleway', sans-serif; line-height: 1.2; }
+
+        /* ── NAV ── */
+        .nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 0 5%;
+            display: flex; align-items: center; justify-content: space-between;
+            height: 68px;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .nav-logo-icon {
+            width: 36px; height: 36px; background: var(--primary);
+            border-radius: 8px; display: flex; align-items: center; justify-content: center;
+        }
+        .nav-logo-icon svg { width: 20px; height: 20px; }
+        .nav-logo-text { display: flex; flex-direction: column; }
+        .nav-logo-text .t1 { font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 14px; color: var(--dark); line-height: 1; }
+        .nav-logo-text .t2 { font-size: 10px; color: var(--muted); font-weight: 500; letter-spacing: 0.5px; }
+        .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+        .nav-links a { text-decoration: none; font-size: 14px; font-weight: 500; color: var(--muted); transition: var(--transition); }
+        .nav-links a:hover { color: var(--primary); }
+        .nav-ctas { display: flex; align-items: center; gap: 12px; }
+
+        /* ── BUTTONS ── */
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 20px; border-radius: var(--radius-sm);
+            font-size: 14px; font-weight: 600; cursor: pointer;
+            transition: var(--transition); text-decoration: none;
+            border: 2px solid transparent; font-family: 'Inter', sans-serif;
+        }
+        .btn-ghost { color: var(--dark); background: transparent; border-color: transparent; }
+        .btn-ghost:hover { color: var(--primary); }
+        .btn-primary { background: var(--primary); color: white; box-shadow: 0 2px 8px rgba(37,99,235,0.3); }
+        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(37,99,235,0.4); }
+        .btn-accent { background: var(--accent); color: white; box-shadow: 0 2px 8px rgba(245,158,11,0.3); }
+        .btn-accent:hover { background: var(--accent-dark); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(245,158,11,0.4); }
+        .btn-outline-white { background: transparent; color: white; border-color: rgba(255,255,255,0.4); }
+        .btn-outline-white:hover { background: rgba(255,255,255,0.1); border-color: white; }
+        .btn-outline { background: transparent; color: var(--dark); border-color: var(--border); }
+        .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+        .btn-lg { padding: 14px 28px; font-size: 15px; border-radius: var(--radius); }
+
+        /* ── HERO ── */
+        .hero {
+            padding-top: 68px;
+            background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 55%, #1D4ED8 100%);
+            min-height: 92vh; display: flex; align-items: center; position: relative; overflow: hidden;
+        }
+        .hero::after {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(ellipse at 80% 50%, rgba(99,102,241,0.15) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .hero-inner {
+            position: relative; z-index: 1; width: 100%; max-width: 1200px;
+            margin: 0 auto; padding: 80px 5%;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 6px 14px;
+            background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.35);
+            border-radius: 100px; color: var(--accent); font-size: 13px; font-weight: 600;
+            margin-bottom: 24px;
+        }
+        .hero-badge-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+        .hero h1 { font-size: clamp(36px, 5vw, 58px); font-weight: 900; color: white; margin-bottom: 20px; }
+        .hero h1 em { font-style: normal; color: var(--accent); }
+        .hero-desc { font-size: 18px; color: rgba(255,255,255,0.72); margin-bottom: 36px; line-height: 1.75; max-width: 520px; }
+        .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+        .hero-trust { margin-top: 48px; display: flex; align-items: center; gap: 16px; }
+        .avatars { display: flex; }
+        .avatars span {
+            width: 32px; height: 32px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.25);
+            background: linear-gradient(135deg, #60A5FA, #A78BFA);
+            margin-left: -8px; display: flex; align-items: center; justify-content: center;
+            font-size: 10px; font-weight: 700; color: white;
+        }
+        .avatars span:first-child { margin-left: 0; }
+        .trust-text { font-size: 13px; color: rgba(255,255,255,0.55); }
+        .trust-text strong { color: white; font-size: 14px; display: block; }
+
+        /* hero mockup */
+        .hero-visual { position: relative; }
+        .mockup {
+            background: white; border-radius: 16px;
+            box-shadow: 0 32px 80px rgba(0,0,0,0.45);
+            overflow: hidden;
+            transform: perspective(1000px) rotateY(-8deg) rotateX(3deg);
+            transition: transform 0.4s ease;
+        }
+        .mockup:hover { transform: perspective(1000px) rotateY(-3deg) rotateX(1deg); }
+        .mock-bar { background: #F1F5F9; padding: 10px 14px; display: flex; gap: 6px; border-bottom: 1px solid #E2E8F0; }
+        .mock-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .mock-body { padding: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .mock-card { background: #F8FAFC; border-radius: 8px; padding: 14px; border: 1px solid #E2E8F0; }
+        .mock-lbl { font-size: 10px; color: #64748B; font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; }
+        .mock-val { font-size: 24px; font-weight: 800; color: #0F172A; font-family: 'Raleway', sans-serif; margin: 3px 0; }
+        .mock-chg { font-size: 11px; color: #10B981; font-weight: 600; }
+        .mock-bars { grid-column: 1 / -1; background: #F8FAFC; border-radius: 8px; padding: 14px; border: 1px solid #E2E8F0; height: 72px; display: flex; align-items: flex-end; gap: 5px; }
+        .mb { flex: 1; border-radius: 3px 3px 0 0; background: #BFDBFE; }
+        .mb.hi { background: #2563EB; }
+
+        /* ── STATS ── */
+        .stats { background: var(--dark); padding: 60px 5%; }
+        .stats-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
+        .stat { text-align: center; }
+        .stat-num { font-family: 'Raleway', sans-serif; font-size: 44px; font-weight: 900; color: white; line-height: 1; margin-bottom: 8px; }
+        .stat-num span { color: var(--accent); }
+        .stat-lbl { font-size: 14px; color: rgba(255,255,255,0.45); font-weight: 500; }
+
+        /* ── SECTIONS ── */
+        .section { padding: 100px 5%; }
+        .sec-inner { max-width: 1200px; margin: 0 auto; }
+        .sec-tag {
+            display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px;
+            background: var(--primary-light); border-radius: 100px;
+            font-size: 11px; font-weight: 700; color: var(--primary);
+            text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 16px;
+        }
+        .sec-title { font-size: clamp(28px, 4vw, 44px); font-weight: 800; color: var(--dark); margin-bottom: 16px; }
+        .sec-sub { font-size: 18px; color: var(--muted); max-width: 560px; line-height: 1.75; }
+        .sec-hd { margin-bottom: 64px; }
+        .sec-hd.center { text-align: center; }
+        .sec-hd.center .sec-sub { margin: 0 auto; }
+
+        /* ── FEATURES ── */
+        .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+        .feat-card {
+            padding: 32px; border-radius: var(--radius);
+            border: 1px solid var(--border); background: var(--white);
+            transition: var(--transition); cursor: default;
+        }
+        .feat-card:hover { border-color: var(--primary); box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+        .feat-icon { width: 48px; height: 48px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+        .feat-icon svg { width: 24px; height: 24px; }
+        .feat-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 10px; color: var(--dark); }
+        .feat-card p { font-size: 15px; color: var(--muted); line-height: 1.7; }
+
+        /* ── HOW ── */
+        .how-bg { background: var(--bg); }
+        .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; position: relative; }
+        .steps::before { content: ''; position: absolute; top: 24px; left: 22%; right: 22%; height: 2px; background: linear-gradient(90deg, var(--primary), var(--accent)); }
+        .step { text-align: center; }
+        .step-n {
+            width: 48px; height: 48px; background: var(--primary); color: white;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 18px;
+            margin: 0 auto 24px; position: relative; z-index: 1;
+            box-shadow: 0 0 0 6px var(--primary-light);
+        }
+        .step h3 { font-size: 20px; font-weight: 700; margin-bottom: 12px; color: var(--dark); }
+        .step p { font-size: 15px; color: var(--muted); line-height: 1.7; }
+
+        /* ── TESTIMONIALS ── */
+        .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+        .testi-card { padding: 32px; background: var(--white); border-radius: var(--radius); border: 1px solid var(--border); transition: var(--transition); }
+        .testi-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+        .stars { display: flex; gap: 3px; margin-bottom: 16px; }
+        .stars svg { width: 15px; height: 15px; fill: var(--accent); }
+        .testi-text { font-size: 15px; color: var(--dark-2); line-height: 1.75; margin-bottom: 24px; font-style: italic; }
+        .testi-author { display: flex; align-items: center; gap: 12px; }
+        .testi-av { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: white; font-size: 15px; font-family: 'Raleway', sans-serif; flex-shrink: 0; }
+        .testi-info strong { display: block; font-size: 14px; font-weight: 700; color: var(--dark); }
+        .testi-info span { font-size: 13px; color: var(--muted); }
+
+        /* ── PRICING ── */
+        .pricing-bg { background: var(--bg); }
+        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; align-items: start; }
+        .price-card { background: var(--white); border-radius: var(--radius); border: 1px solid var(--border); padding: 36px 32px; transition: var(--transition); }
+        .price-card.pop { border-color: var(--primary); background: var(--dark); transform: scale(1.04); box-shadow: var(--shadow-lg); }
+        .price-card:hover:not(.pop) { border-color: var(--primary); box-shadow: var(--shadow-md); }
+        .price-badge { display: inline-block; padding: 3px 12px; background: var(--accent); color: white; border-radius: 100px; font-size: 11px; font-weight: 700; margin-bottom: 12px; }
+        .price-name { font-family: 'Raleway', sans-serif; font-size: 20px; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
+        .pop .price-name { color: white; }
+        .price-desc { font-size: 14px; color: var(--muted); margin-bottom: 20px; line-height: 1.6; }
+        .pop .price-desc { color: rgba(255,255,255,0.55); }
+        .price-val { font-family: 'Raleway', sans-serif; font-size: 44px; font-weight: 900; color: var(--dark); line-height: 1; margin-bottom: 6px; }
+        .pop .price-val { color: white; }
+        .price-val sup { font-size: 20px; font-weight: 600; vertical-align: top; margin-top: 8px; display: inline-block; }
+        .price-per { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+        .pop .price-per { color: rgba(255,255,255,0.5); }
+        .price-div { border: none; border-top: 1px solid var(--border); margin-bottom: 24px; }
+        .pop .price-div { border-color: rgba(255,255,255,0.12); }
+        .price-feats { list-style: none; margin-bottom: 32px; }
+        .price-feats li { display: flex; align-items: center; gap: 10px; padding: 6px 0; font-size: 14px; color: var(--dark-2); }
+        .pop .price-feats li { color: rgba(255,255,255,0.82); }
+        .price-feats li svg { width: 16px; height: 16px; color: var(--success); flex-shrink: 0; }
+        .pop .price-feats li svg { color: var(--accent); }
+        .btn-full { width: 100%; justify-content: center; }
+
+        /* ── CTA ── */
+        .cta-sec { background: linear-gradient(135deg, #1B4FD8 0%, #6D28D9 100%); padding: 100px 5%; text-align: center; }
+        .cta-sec h2 { font-size: clamp(28px, 4vw, 50px); font-weight: 900; color: white; margin-bottom: 16px; }
+        .cta-sec p { font-size: 18px; color: rgba(255,255,255,0.7); margin-bottom: 40px; max-width: 500px; margin-left: auto; margin-right: auto; }
+        .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+        /* ── FOOTER ── */
+        footer { background: var(--dark); padding: 80px 5% 40px; }
+        .foot-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 60px; }
+        .foot-brand p { font-size: 14px; color: rgba(255,255,255,0.45); margin-top: 16px; line-height: 1.75; max-width: 280px; }
+        .foot-col h4 { font-family: 'Raleway', sans-serif; font-size: 12px; font-weight: 700; color: white; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.8px; }
+        .foot-col ul { list-style: none; }
+        .foot-col ul li { margin-bottom: 12px; }
+        .foot-col ul li a { font-size: 14px; color: rgba(255,255,255,0.45); text-decoration: none; transition: var(--transition); }
+        .foot-col ul li a:hover { color: white; }
+        .foot-bottom { max-width: 1200px; margin: 0 auto; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: space-between; }
+        .foot-bottom p { font-size: 13px; color: rgba(255,255,255,0.3); }
+        .foot-socials { display: flex; gap: 10px; }
+        .foot-socials a { width: 36px; height: 36px; border-radius: 8px; background: rgba(255,255,255,0.07); display: flex; align-items: center; justify-content: center; transition: var(--transition); }
+        .foot-socials a:hover { background: var(--primary); }
+        .foot-socials svg { width: 15px; height: 15px; stroke: rgba(255,255,255,0.55); fill: none; stroke-width: 2; }
+        .foot-socials a:hover svg { stroke: white; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 1024px) {
+            .features-grid, .testi-grid { grid-template-columns: repeat(2, 1fr); }
+            .stats-inner { grid-template-columns: repeat(2, 1fr); }
+            .foot-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero-inner { grid-template-columns: 1fr; }
+            .hero-visual { display: none; }
+            .features-grid, .testi-grid, .pricing-grid, .steps { grid-template-columns: 1fr; }
+            .steps::before { display: none; }
+            .price-card.pop { transform: none; }
+            .foot-grid { grid-template-columns: 1fr; }
+            .foot-bottom { flex-direction: column; gap: 16px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+    <a href="index.html" class="nav-logo">
+        <div class="nav-logo-icon">
+            <svg fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        </div>
+        <div class="nav-logo-text">
+            <span class="t1">KAZI CONNECT</span>
+            <span class="t2">HMS</span>
+        </div>
+    </a>
+    <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#testimonials">Our Story</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+    </ul>
+    <div class="nav-ctas">
+        <a href="HMS_Registration_Portal.html" class="btn btn-ghost">Sign In</a>
+        <a href="HMS_Registration_Portal.html" class="btn btn-primary">Get Started →</a>
+        <a href="dashboard.html" class="btn btn-ghost" style="font-size:12px;opacity:0.55;padding:8px 12px;" title="Admin access only">Admin ↗</a>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-inner">
+        <div>
+            <div class="hero-badge"><div class="hero-badge-dot"></div> New Company, Big Ideas</div>
+            <h1>Hire the Right <em>Talent</em>, Faster</h1>
+            <p class="hero-desc">Kazi Connect is a newly launched Tanzanian recruitment &amp; HR technology company, built on our own Hiring Management System to streamline your entire recruitment process from job posting to onboarding  all in one powerful platform.</p>
+            <div class="hero-btns">
+                <a href="HMS_Registration_Portal.html" class="btn btn-accent btn-lg">Start Free Trial</a>
+                <a href="#features" class="btn btn-outline-white btn-lg">Learn More</a>
+            </div>
+            <div class="hero-trust">
+                <div class="trust-text">
+                    <strong>🚀 Founded 2026 in Dar es Salaam, Tanzania</strong>
+                    Bringing fresh, technology-driven ideas to African hiring
+                </div>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="mockup">
+                <div class="mock-bar">
+                    <div class="mock-dot" style="background:#FF5F57"></div>
+                    <div class="mock-dot" style="background:#FEBC2E"></div>
+                    <div class="mock-dot" style="background:#28C840"></div>
+                </div>
+                <div class="mock-body">
+                    <div class="mock-card">
+                        <div class="mock-lbl">Open Positions</div>
+                        <div class="mock-val">24</div>
+                        <div class="mock-chg">↑ 3 this week</div>
+                    </div>
+                    <div class="mock-card">
+                        <div class="mock-lbl">Active Candidates</div>
+                        <div class="mock-val">186</div>
+                        <div class="mock-chg">↑ 12 today</div>
+                    </div>
+                    <div class="mock-card">
+                        <div class="mock-lbl">Interviews Today</div>
+                        <div class="mock-val">8</div>
+                        <div class="mock-chg">↑ 2 pending</div>
+                    </div>
+                    <div class="mock-card">
+                        <div class="mock-lbl">Hires This Month</div>
+                        <div class="mock-val">12</div>
+                        <div class="mock-chg">↑ 4 vs last month</div>
+                    </div>
+                    <div class="mock-bars">
+                        <div class="mb" style="height:38%"></div>
+                        <div class="mb" style="height:55%"></div>
+                        <div class="mb" style="height:42%"></div>
+                        <div class="mb" style="height:68%"></div>
+                        <div class="mb" style="height:52%"></div>
+                        <div class="mb hi" style="height:85%"></div>
+                        <div class="mb" style="height:70%"></div>
+                        <div class="mb hi" style="height:92%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+    <div class="stats-inner">
+        <div class="stat"><div class="stat-num">2026</div><div class="stat-lbl">Founded</div></div>
+        <div class="stat"><div class="stat-num">10<span>+</span></div><div class="stat-lbl">Industries Served</div></div>
+        <div class="stat"><div class="stat-num">50<span>+</span></div><div class="stat-lbl">Positions Managed</div></div>
+        <div class="stat"><div class="stat-num">100<span>%</span></div><div class="stat-lbl">Tanzania-Focused</div></div>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section" id="features">
+    <div class="sec-inner">
+        <div class="sec-hd">
+            <div class="sec-tag">✦ Features</div>
+            <h2 class="sec-title">Everything You Need to Hire Better</h2>
+            <p class="sec-sub">A complete toolkit for modern recruitment teams  from first posting to final offer.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feat-card">
+                <div class="feat-icon" style="background:#EFF6FF"><svg fill="none" stroke="#2563EB" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg></div>
+                <h3>Smart Job Posting</h3>
+                <p>Publish job listings to multiple job boards simultaneously with one click. Reach more candidates, faster.</p>
+            </div>
+            <div class="feat-card">
+                <div class="feat-icon" style="background:#F0FDF4"><svg fill="none" stroke="#10B981" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div>
+                <h3>Candidate Pipeline</h3>
+                <p>Track every candidate through a visual hiring funnel. Move candidates through stages with ease.</p>
+            </div>
+            <div class="feat-card">
+                <div class="feat-icon" style="background:#FEF3C7"><svg fill="none" stroke="#F59E0B" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+                <h3>Interview Scheduling</h3>
+                <p>Automate interview scheduling with calendar sync. Eliminate back-and-forth email chains forever.</p>
+            </div>
+            <div class="feat-card">
+                <div class="feat-icon" style="background:#F5F3FF"><svg fill="none" stroke="#7C3AED" stroke-width="2" viewBox="0 0 24 24"><path d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg></div>
+                <h3>Collaborative Hiring</h3>
+                <p>Enable team-based reviews and structured feedback. Keep everyone aligned throughout the process.</p>
+            </div>
+            <div class="feat-card">
+                <div class="feat-icon" style="background:#FFF1F2"><svg fill="none" stroke="#F43F5E" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+                <h3>Analytics & Reports</h3>
+                <p>Data-driven insights to optimise your hiring funnel. Understand time-to-hire, source quality, and more.</p>
+            </div>
+            <div class="feat-card">
+                <div class="feat-icon" style="background:#F0FDF4"><svg fill="none" stroke="#10B981" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg></div>
+                <h3>Compliance & Security</h3>
+                <p>GDPR-compliant data handling with enterprise-grade security. Keep your candidate data safe.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section how-bg" id="how-it-works">
+    <div class="sec-inner">
+        <div class="sec-hd center">
+            <div class="sec-tag">✦ Process</div>
+            <h2 class="sec-title">How It Works</h2>
+            <p class="sec-sub">Get started in minutes. Hire in days, not weeks.</p>
+        </div>
+        <div class="steps">
+            <div class="step">
+                <div class="step-n">1</div>
+                <h3>Post Your Jobs</h3>
+                <p>Create job listings in minutes and publish instantly to top job boards across Africa and beyond.</p>
+            </div>
+            <div class="step">
+                <div class="step-n">2</div>
+                <h3>Manage Candidates</h3>
+                <p>Track, filter, and evaluate candidates in one unified dashboard. Collaborate with your hiring team.</p>
+            </div>
+            <div class="step">
+                <div class="step-n">3</div>
+                <h3>Make Better Hires</h3>
+                <p>Use data insights and structured interviews to make confident, bias-free hiring decisions.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section" id="testimonials">
+    <div class="sec-inner">
+        <div class="sec-hd center">
+            <div class="sec-tag">✦ Our Story</div>
+            <h2 class="sec-title">A New Company With Big Ideas</h2>
+            <p class="sec-sub">Founded in 2026 in Dar es Salaam, Kazi Connect is bringing professional, technology-driven recruitment and HR management to Tanzania and East Africa.</p>
+        </div>
+        <div class="testi-grid">
+            <div class="testi-card">
+                <div class="feat-icon" style="background:#EFF6FF"><svg fill="none" stroke="#2563EB" stroke-width="2" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div>
+                <h3 style="font-size:18px;font-weight:700;margin-bottom:10px;color:var(--dark)">Local Intelligence</h3>
+                <p class="testi-text" style="font-style:normal">Built in Tanzania, for Tanzania. Our understanding of salary expectations, notice periods, and employer culture comes from lived experience in this market — not theory.</p>
+            </div>
+            <div class="testi-card">
+                <div class="feat-icon" style="background:#F0FDF4"><svg fill="none" stroke="#10B981" stroke-width="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+                <h3 style="font-size:18px;font-weight:700;margin-bottom:10px;color:var(--dark)">Technology-Backed</h3>
+                <p class="testi-text" style="font-style:normal">We operate our own proprietary Hiring Management System — a live platform for faster candidate processing and real-time pipeline visibility.</p>
+            </div>
+            <div class="testi-card">
+                <div class="feat-icon" style="background:#FFF7ED"><svg fill="none" stroke="#F59E0B" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+                <h3 style="font-size:18px;font-weight:700;margin-bottom:10px;color:var(--dark)">Integrity-First</h3>
+                <p class="testi-text" style="font-style:normal">We tell clients when we can't find the right candidate rather than forward warm bodies. Our replacement guarantees reflect our confidence in every placement.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PRICING -->
+<section class="section pricing-bg" id="pricing">
+    <div class="sec-inner">
+        <div class="sec-hd center">
+            <div class="sec-tag">✦ Pricing</div>
+            <h2 class="sec-title">Simple, Transparent Pricing</h2>
+            <p class="sec-sub">Monthly retainers billed in Tanzanian Shillings. Minimum 3-month engagement, month-to-month after that.</p>
+        </div>
+        <div class="pricing-grid">
+            <div class="price-card">
+                <div class="price-name">Basic</div>
+                <p class="price-desc">Perfect for small teams just getting started with structured hiring.</p>
+                <div class="price-val" style="font-size:26px"><span style="font-size:13px;font-weight:700;vertical-align:top;margin-right:4px">TZS</span>1,500,000</div>
+                <div class="price-per">per month, min. 3 months</div>
+                <hr class="price-div">
+                <ul class="price-feats">
+                    <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Up to 3 roles/month</li>
+                    <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Candidate sourcing</li>
+                    <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>CV screening & shortlisting</li>
+                    <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Interview scheduling</li>
+                    <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Written shortlist report</li>
+                    <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>3-month replacement guarantee</li>
+                </ul>
+                <button onclick="startCheckout('basic')" class="btn btn-outline btn-full">Get Started</button>
+            </div>
+            <div class="price-card pop">
+                <div class="price-badge">Most Popular</div>
+                <div class="price-name">Professional</div>
+                <p class="price-desc">For growing teams that need more power and ongoing HR support.</p>
+                <div class="price-val" style="font-size:26px"><span style="font-size:13px;font-weight:700;vertical-align:top;margin-right:4px">TZS</span>2,250,000</div>
+                <div class="price-per">per month, min. 3 months</div>
+                <hr class="price-div">
+                <ul class="price-feats">
+                    <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Up to 6 roles/month</li>
+                    <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>All Basic services</li>
+                    <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Onboarding support</li>
+                    <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>HR policy advisory</li>
+                    <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Monthly HR report</li>
+                    <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Salary benchmarking</li>
+                    <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Staff handbook</li>
+                    <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>6-month replacement guarantee</li>
+                </ul>
+                <button onclick="startCheckout('professional')" class="btn btn-accent btn-full">Get Started →</button>
+            </div>
+            <div class="price-card">
+                <div class="price-name">Enterprise</div>
+                <p class="price-desc">For large organisations that want their HR function fully managed.</p>
+                <div class="price-val" style="font-size:26px"><span style="font-size:13px;font-weight:700;vertical-align:top;margin-right:4px">TZS</span>3,375,000</div>
+                <div class="price-per">per month, min. 3 months</div>
+                <hr class="price-div">
+                <ul class="price-feats">
+                    <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Unlimited roles</li>
+                    <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>All Professional services</li>
+                    <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Dedicated HR Partner</li>
+                    <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Staff records management</li>
+                    <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Labor law compliance</li>
+                    <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Payroll advisory</li>
+                    <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Quarterly workforce planning</li>
+                    <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Priority 48-hr response</li>
+                    <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>12-month replacement guarantee</li>
+                </ul>
+                <button onclick="startCheckout('enterprise')" class="btn btn-outline btn-full">Get Started</button>
+            </div>
+        </div>
+        <p style="text-align:center;font-size:13px;color:var(--muted);margin-top:24px">Need bulk recruitment or standalone HR advisory? <a href="#" style="color:var(--accent);font-weight:600">Contact us</a> for custom pricing.</p>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-sec">
+    <h2>Ready to Transform Your Hiring?</h2>
+    <p>Be among the first to hire better, faster with Kazi Connect.</p>
+    <div class="cta-btns">
+        <a href="HMS_Registration_Portal.html" class="btn btn-accent btn-lg">Start Free Trial</a>
+        <a href="HMS_Registration_Portal.html" class="btn btn-outline-white btn-lg">Schedule a Demo</a>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="foot-grid">
+        <div class="foot-brand">
+            <a href="index.html" class="nav-logo">
+                <div class="nav-logo-icon"><svg fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div>
+                <div class="nav-logo-text"><span class="t1" style="color:white">KAZI</span><span class="t2">CONNECT</span></div>
+            </a>
+            <p>A new Tanzania-born recruitment &amp; HR technology company, founded in Dar es Salaam — empowering African businesses to find and hire the best talent from day one.</p>
+        </div>
+        <div class="foot-col">
+            <h4>Product</h4>
+            <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="dashboard.html">Admin Dashboard</a></li>
+                <li><a href="#">API Docs</a></li>
+                <li><a href="#">Changelog</a></li>
+            </ul>
+        </div>
+        <div class="foot-col">
+            <h4>Company</h4>
+            <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Press Kit</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+        <div class="foot-col">
+            <h4>Legal</h4>
+            <ul>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">Cookie Policy</a></li>
+                <li><a href="#">GDPR</a></li>
+                <li><a href="#">Security</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="foot-bottom">
+        <p>© 2026 Kazi Connect. All rights reserved.</p>
+        <div class="foot-socials">
+            <a href="#"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg></a>
+            <a href="#"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+            <a href="#"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        </div>
+    </div>
+</footer>
+
+<!-- SELCOM CHECKOUT MODAL -->
+<div id="checkout-overlay" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,0.55);z-index:999;align-items:center;justify-content:center;backdrop-filter:blur(4px)">
+    <div style="background:white;border-radius:20px;padding:40px 36px;max-width:440px;width:90%;box-shadow:0 24px 64px rgba(0,0,0,0.2);position:relative">
+        <button onclick="closeCheckoutModal()" style="position:absolute;top:16px;right:16px;background:none;border:none;cursor:pointer;color:#64748B;padding:4px">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+        <div id="checkout-plan-icon" style="width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:20px">
+            <svg width="26" height="26" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M20 7H4a2 2 0 00-2 2v6a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+        </div>
+        <h3 id="checkout-plan-name" style="font-family:'Raleway',sans-serif;font-size:22px;font-weight:800;color:#0F172A;margin-bottom:4px"></h3>
+        <p id="checkout-plan-price" style="font-size:14px;color:#64748B;margin-bottom:20px"></p>
+
+        <label style="display:block;font-size:13px;font-weight:600;color:#0F172A;margin-bottom:6px">Full Name</label>
+        <input id="checkout-name" type="text" placeholder="John Doe"
+            style="width:100%;padding:10px 14px;border:1.5px solid #E2E8F0;border-radius:10px;font-size:14px;outline:none;margin-bottom:12px;font-family:'Inter',sans-serif"
+            onfocus="this.style.borderColor='#2563EB'" onblur="this.style.borderColor='#E2E8F0'">
+
+        <label style="display:block;font-size:13px;font-weight:600;color:#0F172A;margin-bottom:6px">Email Address</label>
+        <input id="checkout-email" type="email" placeholder="you@company.com"
+            style="width:100%;padding:10px 14px;border:1.5px solid #E2E8F0;border-radius:10px;font-size:14px;outline:none;margin-bottom:12px;font-family:'Inter',sans-serif"
+            onfocus="this.style.borderColor='#2563EB'" onblur="this.style.borderColor='#E2E8F0'">
+
+        <label style="display:block;font-size:13px;font-weight:600;color:#0F172A;margin-bottom:6px">Phone Number</label>
+        <input id="checkout-phone" type="tel" placeholder="255712345678"
+            style="width:100%;padding:10px 14px;border:1.5px solid #E2E8F0;border-radius:10px;font-size:14px;outline:none;margin-bottom:4px;font-family:'Inter',sans-serif"
+            onfocus="this.style.borderColor='#2563EB'" onblur="this.style.borderColor='#E2E8F0'">
+        <p style="font-size:11px;color:#94A3B8;margin-bottom:16px">Include country code — e.g. 255712345678</p>
+
+        <p id="checkout-error" style="display:none;color:#EF4444;font-size:12px;margin-bottom:10px"></p>
+        <button id="checkout-btn" onclick="submitCheckout()"
+            style="width:100%;padding:13px;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;background:#2563EB;color:white;font-family:'Inter',sans-serif;transition:all 0.2s">
+            Proceed to Payment →
+        </button>
+        <p style="text-align:center;font-size:11px;color:#94A3B8;margin-top:14px">
+            M-Pesa · Airtel · Tigo · Cards · CRDB · NBC · Cancel anytime
+        </p>
+    </div>
+</div>
+
+<script>
+    let _checkoutPlan = null;
+
+    const PLAN_INFO = {
+        basic:        { label: 'Basic Package',        price: 'TZS 1,500,000 / month', color: '#2563EB' },
+        professional: { label: 'Professional Package',  price: 'TZS 2,250,000 / month', color: '#F59E0B' },
+        enterprise:   { label: 'Enterprise Package',    price: 'TZS 3,375,000 / month', color: '#7C3AED' },
+    };
+
+    function startCheckout(plan) {
+        _checkoutPlan = plan;
+        const info = PLAN_INFO[plan] || PLAN_INFO.basic;
+        document.getElementById('checkout-plan-name').textContent  = info.label;
+        document.getElementById('checkout-plan-price').textContent = info.price;
+        document.getElementById('checkout-plan-icon').style.background = info.color;
+        document.getElementById('checkout-btn').style.background        = info.color;
+        document.getElementById('checkout-error').style.display = 'none';
+        document.getElementById('checkout-name').value  = '';
+        document.getElementById('checkout-email').value = '';
+        document.getElementById('checkout-phone').value = '';
+        document.getElementById('checkout-btn').textContent = 'Proceed to Payment →';
+        document.getElementById('checkout-btn').disabled = false;
+        document.getElementById('checkout-overlay').style.display = 'flex';
+        setTimeout(() => document.getElementById('checkout-name').focus(), 100);
+    }
+
+    async function submitCheckout() {
+        const name  = document.getElementById('checkout-name').value.trim();
+        const email = document.getElementById('checkout-email').value.trim();
+        const phone = document.getElementById('checkout-phone').value.trim();
+        const btn   = document.getElementById('checkout-btn');
+        const errEl = document.getElementById('checkout-error');
+
+        if (!name)  { showCheckoutErr('Please enter your full name.'); return; }
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showCheckoutErr('Please enter a valid email address.'); return; }
+        if (!phone) { showCheckoutErr('Please enter your phone number.'); return; }
+
+        errEl.style.display = 'none';
+        btn.textContent = 'Processing payment…';
+        btn.disabled = true;
+
+        try {
+            const res  = await fetch('/.netlify/functions/selcom-checkout', {
+                method:  'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body:    JSON.stringify({ plan: _checkoutPlan, name, email, phone }),
+            });
+            const data = await res.json();
+
+            if (data.payment_url) {
+                btn.textContent = 'Redirecting to payment…';
+                window.location.href = data.payment_url;
+            } else {
+                showCheckoutErr(data.error || 'Could not process payment. Please try again.');
+                btn.textContent = 'Proceed to Payment →';
+                btn.disabled = false;
+            }
+        } catch (e) {
+            showCheckoutErr('Network error. Please check your connection.');
+            btn.textContent = 'Proceed to Payment →';
+            btn.disabled = false;
+        }
+    }
+
+    function showCheckoutErr(msg) {
+        const el = document.getElementById('checkout-error');
+        el.textContent = msg;
+        el.style.display = 'block';
+    }
+
+    function closeCheckoutModal() {
+        document.getElementById('checkout-overlay').style.display = 'none';
+    }
+
+    document.getElementById('checkout-overlay').addEventListener('click', function(e) {
+        if (e.target === this) closeCheckoutModal();
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCheckoutModal(); });
+</script>
+</body>
+</html>

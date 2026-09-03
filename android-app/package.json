@@ -1,0 +1,23 @@
+{
+  "name": "kazi-connect-app",
+  "version": "1.0.0",
+  "description": "Kazi Connect Android app - marketing site + HMS bundled offline in one APK",
+  "scripts": {
+    "build": "node scripts/build-www.mjs",
+    "sync": "npm run build && cap sync android",
+    "icons": "node scripts/make-icons.mjs",
+    "fonts": "node scripts/vendor-fonts.mjs",
+    "apk": "npm run sync && cd android && ./gradlew assembleDebug",
+    "open": "cap open android"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.5.1",
+    "@capacitor/app": "^8.1.1",
+    "@capacitor/browser": "^8.0.4",
+    "@capacitor/cli": "^8.5.1",
+    "@capacitor/core": "^8.5.1",
+    "@capacitor/status-bar": "^8.0.3",
+    "chart.js": "^4.4.3"
+  },
+  "private": true
+}

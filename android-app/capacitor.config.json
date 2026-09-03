@@ -1,0 +1,17 @@
+{
+  "appId": "com.kaziconnect.app",
+  "appName": "Kazi Connect",
+  "webDir": "www",
+  "android": {
+    "allowMixedContent": false
+  },
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#1B2D2A"
+    }
+  }
+}

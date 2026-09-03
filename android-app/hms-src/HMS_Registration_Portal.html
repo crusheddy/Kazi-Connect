@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kazi Connect Registration Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sb:#0D1B3E;--sb-dark:#071228;
+  --yel:#EAB308;--yel-bg:#FEF9C3;--yel-bdr:#D97706;
+  --k-org:#EA580C;--k-grn:#16A34A;--k-blu:#1D4ED8;--k-tel:#0E7490;
+  --c-red:#DC2626;--c-pur:#7C3AED;
+  --bg:#EEF3FA;--card:#FFF;--bdr:#E2E8F0;--bdr2:#CBD5E1;
+  --txt:#0F172A;--txt2:#475569;--txt3:#94A3B8;
+  --r:8px;--rlg:12px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'DM Sans',-apple-system,sans-serif;
+  background:var(--bg);color:var(--txt);font-size:14px;line-height:1.5;
+  min-height:100vh;
+}
+
+/* ── TOP NAV ── */
+.top-nav{
+  background:var(--sb);padding:0 32px;
+  display:flex;align-items:center;justify-content:space-between;
+  height:62px;position:sticky;top:0;z-index:100;
+  box-shadow:0 2px 16px rgba(0,0,0,.25);
+}
+.nav-brand{display:flex;align-items:center;gap:12px}
+.nav-logo{
+  width:40px;height:40px;border-radius:50%;background:#1D4ED8;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:700;color:#fff;flex-shrink:0;
+}
+.nav-name{color:#fff;font-weight:700;font-size:16px;line-height:1.2}
+.nav-sub{color:rgba(255,255,255,.5);font-size:11px;font-weight:500;letter-spacing:.5px;text-transform:uppercase}
+.nav-right{display:flex;align-items:center;gap:10px}
+.nav-badge{
+  padding:5px 13px;border-radius:20px;font-size:12px;font-weight:700;
+  cursor:pointer;transition:all .15s;border:none;font-family:inherit;
+}
+.nav-badge-cand{background:#DCFCE7;color:#166534}
+.nav-badge-cli{background:#DBEAFE;color:#1E40AF}
+.nav-badge-cand:hover{background:#BBF7D0}
+.nav-badge-cli:hover{background:#BFDBFE}
+
+/* ── HERO ── */
+.hero{
+  background:linear-gradient(135deg,var(--sb-dark) 0%,#0F2A5C 50%,#0D1B3E 100%);
+  padding:64px 32px 48px;text-align:center;position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(234,179,8,.15);border:1px solid rgba(234,179,8,.35);
+  color:var(--yel);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:700;
+  letter-spacing:.5px;text-transform:uppercase;margin-bottom:18px;
+}
+.hero-tag svg{width:13px;height:13px}
+.hero h1{font-size:36px;font-weight:700;color:#fff;margin-bottom:12px;line-height:1.2}
+.hero h1 span{color:var(--yel)}
+.hero p{font-size:16px;color:rgba(255,255,255,.65);max-width:540px;margin:0 auto 32px;line-height:1.7}
+
+/* ── LIVE STATS BAR ── */
+.stats-bar{
+  display:flex;justify-content:center;gap:0;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  border-radius:var(--rlg);overflow:hidden;max-width:600px;margin:0 auto;
+}
+.stat-item{
+  flex:1;padding:14px 20px;text-align:center;
+  border-right:1px solid rgba(255,255,255,.08);
+}
+.stat-item:last-child{border-right:none}
+.stat-val{font-size:26px;font-weight:800;color:#fff;line-height:1}
+.stat-lbl{font-size:10px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.7px;margin-top:3px}
+.live-dot{
+  display:inline-block;width:6px;height:6px;border-radius:50%;
+  background:#22C55E;margin-right:5px;
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,.5)}70%{box-shadow:0 0 0 6px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+
+/* ── TABS ── */
+.tabs-wrap{max-width:820px;margin:0 auto;padding:0 20px}
+.tabs{
+  display:flex;background:var(--card);border-radius:var(--rlg);
+  padding:5px;gap:4px;margin-top:-24px;position:relative;z-index:10;
+  box-shadow:0 8px 32px rgba(0,0,0,.12);border:.5px solid var(--bdr);
+}
+.tab{
+  flex:1;padding:13px;border-radius:var(--r);font-family:inherit;font-size:14px;
+  font-weight:700;cursor:pointer;border:none;transition:all .2s;
+  display:flex;align-items:center;justify-content:center;gap:8px;color:var(--txt3);
+  background:transparent;
+}
+.tab:hover{background:var(--bg);color:var(--txt2)}
+.tab.active{background:var(--sb);color:#fff;box-shadow:0 4px 12px rgba(13,27,62,.3)}
+.tab svg{width:17px;height:17px;flex-shrink:0}
+
+/* ── FORM CARD ── */
+.form-section{max-width:820px;margin:24px auto 60px;padding:0 20px}
+.form-card{
+  background:var(--card);border-radius:var(--rlg);
+  border:.5px solid var(--bdr);overflow:hidden;
+  box-shadow:0 4px 24px rgba(0,0,0,.06);
+  display:none;
+}
+.form-card.active{display:block;animation:fadein .2s ease}
+@keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.form-head{
+  background:var(--sb);padding:20px 28px;
+  display:flex;align-items:center;gap:12px;
+}
+.form-head-icon{
+  width:42px;height:42px;border-radius:10px;
+  background:rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;
+}
+.form-head-title{color:#fff;font-weight:700;font-size:17px}
+.form-head-sub{color:rgba(255,255,255,.6);font-size:12px;margin-top:2px}
+.form-body{padding:28px}
+.form-footer{
+  padding:18px 28px;border-top:1px solid var(--bdr);
+  background:#F8FAFF;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;
+}
+.form-footer-note{font-size:12px;color:var(--txt3);display:flex;align-items:center;gap:6px}
+.form-footer-note svg{width:14px;height:14px;flex-shrink:0}
+
+/* ── FORM ELEMENTS ── */
+.fgroup{margin-bottom:18px}
+.fgroup label{
+  display:block;font-size:12px;font-weight:700;color:var(--txt2);
+  margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;
+}
+.req{color:var(--c-red);margin-left:3px}
+.finput,.fselect,.ftextarea{
+  width:100%;padding:10px 14px;
+  border:1.5px solid var(--bdr);border-radius:var(--r);
+  font-family:inherit;font-size:14px;color:var(--txt);
+  background:#fff;outline:none;transition:border-color .15s,box-shadow .15s;
+}
+.finput:focus,.fselect:focus,.ftextarea:focus{
+  border-color:var(--k-blu);
+  box-shadow:0 0 0 3px rgba(29,78,216,.08);
+}
+.finput.err,.fselect.err,.ftextarea.err{border-color:var(--c-red)!important}
+.fselect{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-size:16px;padding-right:38px;}
+.ftextarea{resize:vertical;min-height:80px;max-height:160px;line-height:1.6}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:560px){.frow{grid-template-columns:1fr}}
+.fhint{font-size:11px;color:var(--txt3);margin-top:5px;line-height:1.5}
+.fhint.ok{color:var(--k-grn);font-weight:600}
+.fhint.err{color:var(--c-red);font-weight:600}
+.fdivider{
+  height:1px;background:var(--bdr);margin:24px 0;
+  display:flex;align-items:center;gap:12px;
+}
+.fdivider span{
+  white-space:nowrap;font-size:11px;font-weight:700;
+  color:var(--txt3);text-transform:uppercase;letter-spacing:.7px;
+  background:var(--card);padding:0 12px;
+}
+
+/* ── SUBMIT BUTTON ── */
+.btn-submit{
+  padding:13px 32px;background:var(--k-grn);color:#fff;
+  border:none;border-radius:var(--r);font-family:inherit;
+  font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.btn-submit:hover{background:#15803D;transform:translateY(-1px);box-shadow:0 4px 16px rgba(22,163,74,.3)}
+.btn-submit:active{transform:translateY(0)}
+.btn-submit:disabled{background:var(--txt3);cursor:not-allowed;transform:none;box-shadow:none}
+.btn-submit svg{width:17px;height:17px}
+.btn-submit.loading .spin{animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.btn-reset{
+  padding:11px 20px;background:transparent;color:var(--txt2);
+  border:1.5px solid var(--bdr2);border-radius:var(--r);
+  font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;
+}
+.btn-reset:hover{border-color:var(--c-red);color:var(--c-red)}
+
+/* ── CV UPLOAD ── */
+.cv-upload-box{
+  border:2px dashed var(--bdr2);border-radius:var(--r);
+  background:#FAFBFF;transition:all .2s;overflow:hidden;
+}
+.cv-upload-box.has-file{border-color:var(--k-grn);background:#F0FDF4}
+.cv-upload-box.dragging{border-color:var(--k-blu);background:#EFF6FF;transform:scale(1.01)}
+.cv-drop-area{padding:22px 20px;text-align:center;cursor:pointer}
+.cv-drop-area:hover{background:rgba(37,99,235,.025)}
+.cv-drop-icon{font-size:32px;margin-bottom:8px}
+.cv-drop-title{font-size:14px;font-weight:700;color:var(--txt);margin-bottom:4px}
+.cv-drop-sub{font-size:12px;color:var(--txt3)}
+.cv-btn-row{display:flex;gap:8px;padding:0 16px 16px;justify-content:center;flex-wrap:wrap}
+.cv-btn{
+  padding:8px 16px;border-radius:6px;font-family:inherit;font-size:12px;font-weight:700;
+  cursor:pointer;border:1.5px solid;transition:all .15s;
+  display:inline-flex;align-items:center;gap:5px;
+}
+.cv-btn svg{width:13px;height:13px}
+.cv-btn-file{background:#EFF6FF;border-color:#93C5FD;color:#1D4ED8}
+.cv-btn-file:hover{background:#DBEAFE}
+.cv-file-hidden{display:none}
+.cv-preview{padding:12px 14px;background:#fff;border-top:1px solid var(--bdr);display:none}
+.cv-preview.on{display:block}
+.cv-file-list{display:flex;flex-direction:column;gap:6px;max-height:130px;overflow-y:auto}
+.cv-file-item{
+  display:flex;align-items:center;gap:10px;padding:7px 10px;
+  background:#F8FAFF;border-radius:6px;border:.5px solid var(--bdr);
+}
+.cv-file-icon{font-size:18px;flex-shrink:0}
+.cv-file-info{flex:1;min-width:0}
+.cv-file-name{font-size:12px;font-weight:600;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cv-file-size{font-size:11px;color:var(--txt3)}
+.cv-file-remove{
+  background:none;border:none;cursor:pointer;color:var(--txt3);
+  font-size:14px;padding:2px 6px;border-radius:4px;transition:all .15s;flex-shrink:0;
+}
+.cv-file-remove:hover{background:#FEE2E2;color:#DC2626}
+
+/* ── SUCCESS STATE ── */
+.success-card{
+  text-align:center;padding:48px 32px;
+  display:none;animation:fadein .4s ease;
+}
+.success-card.show{display:block}
+.success-icon{font-size:64px;margin-bottom:16px}
+.success-title{font-size:22px;font-weight:700;color:var(--txt);margin-bottom:8px}
+.success-sub{font-size:15px;color:var(--txt2);margin-bottom:6px}
+.success-id{
+  display:inline-block;font-family:'DM Mono',monospace;font-size:13px;
+  background:#F0FDF4;border:1px solid #86EFAC;color:#166534;
+  border-radius:6px;padding:4px 14px;margin-bottom:20px;font-weight:600;
+}
+.success-note{font-size:13px;color:var(--txt3);line-height:1.7;max-width:400px;margin:0 auto 28px}
+.btn-another{
+  padding:10px 24px;background:var(--sb);color:#fff;
+  border:none;border-radius:var(--r);font-family:inherit;font-size:13px;font-weight:700;
+  cursor:pointer;transition:all .15s;
+}
+.btn-another:hover{background:#162550}
+
+/* ── INFO CARDS ── */
+.info-section{max-width:820px;margin:0 auto 60px;padding:0 20px}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:640px){.info-grid{grid-template-columns:1fr}}
+.info-card{
+  background:var(--card);border-radius:var(--rlg);padding:20px;
+  border:.5px solid var(--bdr);text-align:center;
+}
+.info-card-icon{font-size:30px;margin-bottom:10px}
+.info-card h3{font-size:14px;font-weight:700;color:var(--txt);margin-bottom:6px}
+.info-card p{font-size:12px;color:var(--txt3);line-height:1.6}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--sb);padding:24px 32px;text-align:center;
+  color:rgba(255,255,255,.5);font-size:12px;line-height:1.8;
+}
+footer strong{color:rgba(255,255,255,.8)}
+
+/* ── TOAST ── */
+#toast{
+  position:fixed;bottom:24px;right:24px;
+  background:#0D1B3E;color:#fff;padding:12px 20px;border-radius:var(--r);
+  font-size:13px;font-weight:500;z-index:600;
+  opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;
+  border-left:4px solid var(--k-grn);max-width:340px;
+  box-shadow:0 8px 30px rgba(0,0,0,.25);
+}
+#toast.show{opacity:1;transform:translateY(0)}
+#toast.err{border-left-color:var(--c-red)}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-thumb{background:#CBD5E1;border-radius:3px}
+</style>
+</head>
+<body>
+
+<!-- Hidden Netlify form for email notifications -->
+<form name="portal-registration" netlify hidden>
+  <input type="text" name="submission_type">
+  <input type="text" name="ref_id">
+  <input type="text" name="name">
+  <input type="text" name="phone">
+  <input type="email" name="email">
+  <input type="text" name="city">
+  <input type="text" name="position">
+  <input type="text" name="experience">
+  <input type="text" name="education">
+  <input type="text" name="expected_salary">
+  <input type="text" name="employer">
+  <input type="text" name="referral_source">
+  <input type="text" name="company">
+  <input type="text" name="industry">
+  <input type="text" name="position_needed">
+  <input type="text" name="vacancies">
+  <input type="text" name="budget_range">
+  <input type="text" name="contact_person">
+  <input type="text" name="requirements">
+  <textarea name="notes"></textarea>
+</form>
+
+<!-- TOP NAV -->
+<nav class="top-nav">
+  <div class="nav-brand">
+    <div class="nav-logo">KC</div>
+    <div>
+      <div class="nav-name">Kazi Connect</div>
+      <div class="nav-sub">Recruitment Agency</div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <button class="nav-badge nav-badge-cand" onclick="switchTab('candidate')">👤 I'm a Candidate</button>
+    <button class="nav-badge nav-badge-cli" onclick="switchTab('client')">🏢 I'm a Client</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+    Open Registrations
+  </div>
+  <h1>Find Your Next <span>Opportunity</span><br>or Perfect <span>Hire</span></h1>
+  <p>Kazi Connect connects top talent with leading companies across East Africa. Register below — our team reviews every submission personally.</p>
+  <div class="stats-bar" id="stats-bar">
+    <div class="stat-item">
+      <div class="stat-val" id="s-cands">—</div>
+      <div class="stat-lbl"><span class="live-dot"></span>Candidates</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val" id="s-avail">—</div>
+      <div class="stat-lbl">Active</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val" id="s-clients">—</div>
+      <div class="stat-lbl">Client Companies</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val" id="s-vacs">—</div>
+      <div class="stat-lbl">Open Vacancies</div>
+    </div>
+  </div>
+</section>
+
+<!-- TAB SWITCHER -->
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab active" id="tab-cand" onclick="switchTab('candidate')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Register as a Candidate
+    </button>
+    <button class="tab" id="tab-cli" onclick="switchTab('client')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+      Register as a Client
+    </button>
+  </div>
+</div>
+
+<!-- CANDIDATE FORM -->
+<section class="form-section">
+  <div class="form-card active" id="form-cand">
+    <div class="form-head">
+      <div class="form-head-icon">👤</div>
+      <div>
+        <div class="form-head-title">Candidate Registration</div>
+        <div class="form-head-sub">Tell us about yourself — our team will reach out within 48 hours</div>
+      </div>
+    </div>
+
+    <div class="form-body" id="cand-form-body">
+      <div class="frow">
+        <div class="fgroup">
+          <label>Full Name <span class="req">*</span></label>
+          <input class="finput" id="c-name" type="text" placeholder="e.g. Amani Joseph Mwakasege" autocomplete="name">
+        </div>
+        <div class="fgroup">
+          <label>Phone Number <span class="req">*</span></label>
+          <input class="finput" id="c-phone" type="tel" placeholder="+255 7XX XXX XXX" autocomplete="tel">
+        </div>
+      </div>
+      <div class="fgroup">
+        <label>Email Address</label>
+        <input class="finput" id="c-email" type="email" placeholder="your.name@email.com" autocomplete="email">
+      </div>
+      <div id="c-geo-chip" style="display:flex;align-items:center;gap:7px;padding:8px 12px;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:8px;font-size:12px;color:#065F46">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        <span id="c-geo-text" style="font-weight:500">Detecting your location…</span>
+      </div>
+
+      <div class="fdivider"><span>Professional Details</span></div>
+
+      <div class="frow">
+        <div class="fgroup">
+          <label>Position Applied For <span class="req">*</span></label>
+          <select class="fselect" id="c-position">
+            <option value="">— Select a position —</option>
+          </select>
+        </div>
+        <div class="fgroup">
+          <label>Years of Experience <span class="req">*</span></label>
+          <input class="finput" id="c-exp" type="number" min="0" max="50" placeholder="e.g. 3">
+        </div>
+      </div>
+      <div class="frow">
+        <div class="fgroup">
+          <label>Education Level</label>
+          <select class="fselect" id="c-edu">
+            <option value="">— Select level —</option>
+            <option>Certificate</option>
+            <option>Diploma</option>
+            <option>Bachelor's Degree</option>
+            <option>Master's Degree</option>
+            <option>MBA</option>
+            <option>PhD</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="fgroup">
+          <label>Expected Salary (TZS / month) <span class="req">*</span></label>
+          <input class="finput" id="c-sal" type="number" placeholder="e.g. 1500000">
+          <div class="fhint" id="c-sal-hint"></div>
+        </div>
+      </div>
+
+      <div class="fdivider"><span>Documents</span></div>
+
+      <div class="fgroup">
+        <label>CV / Resume
+          <span style="font-size:11px;font-weight:400;color:var(--txt3);margin-left:6px;text-transform:none;letter-spacing:0">Upload your CV or supporting documents (optional)</span>
+        </label>
+        <div class="cv-upload-box" id="cv-box"
+          ondragover="cvDragOver(event)"
+          ondragleave="cvDragLeave(event)"
+          ondrop="cvDrop(event)">
+          <div class="cv-drop-area" onclick="document.getElementById('cv-file-input').click()">
+            <div class="cv-drop-icon">📄</div>
+            <div class="cv-drop-title">Drag &amp; drop your CV here</div>
+            <div class="cv-drop-sub">PDF, DOC, DOCX, JPG, PNG accepted · up to 5 MB per file</div>
+          </div>
+          <div class="cv-btn-row">
+            <button type="button" class="cv-btn cv-btn-file" onclick="document.getElementById('cv-file-input').click()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+              Select File(s)
+            </button>
+          </div>
+          <input id="cv-file-input" type="file" class="cv-file-hidden" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" onchange="cvFilesChosen(this.files)">
+          <div class="cv-preview" id="cv-preview">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+              <span style="font-size:11px;font-weight:700;color:var(--txt2)" id="cv-count-lbl">0 file(s) selected</span>
+              <button type="button" onclick="cvClearAll()" style="background:none;border:none;cursor:pointer;font-size:11px;color:var(--c-red);font-weight:600">Remove all</button>
+            </div>
+            <div class="cv-file-list" id="cv-file-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fdivider"><span>Additional Information</span></div>
+
+      <div class="fgroup">
+        <label>Reference / Recommendation</label>
+        <input class="finput" id="c-ref" type="text" placeholder="e.g. Prof. Mushi, University of Dar es Salaam">
+      </div>
+      <div class="fgroup">
+        <label>Notes / Additional Skills</label>
+        <textarea class="ftextarea" id="c-notes" placeholder="List any special skills, certifications, languages, or anything you'd like us to know..."></textarea>
+      </div>
+    </div>
+
+    <!-- Success state -->
+    <div class="success-card" id="cand-success">
+      <div class="success-icon">🎉</div>
+      <div class="success-title">Registration Submitted!</div>
+      <div class="success-sub">Thank you for registering with Kazi Connect.</div>
+      <div class="success-id" id="cand-success-id">Ref: —</div>
+      <div class="success-note">Our recruitment team has received your profile and will review it shortly. We will contact you within <strong>48 hours</strong> if there is a suitable match.</div>
+      <button class="btn-another" onclick="resetCandidate()">Submit Another Registration</button>
+    </div>
+
+    <div class="form-footer" id="cand-footer">
+      <div class="form-footer-note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Your information is kept strictly confidential
+      </div>
+      <div style="display:flex;gap:10px">
+        <button class="btn-reset" onclick="resetCandidate()">Clear Form</button>
+        <button class="btn-submit" id="cand-submit-btn" onclick="submitCandidate()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>
+          Submit Registration
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLIENT FORM -->
+  <div class="form-card" id="form-cli">
+    <div class="form-head" style="background:#5B21B6">
+      <div class="form-head-icon">🏢</div>
+      <div>
+        <div class="form-head-title">Client Registration</div>
+        <div class="form-head-sub">Tell us your hiring needs — we'll find the right talent fast</div>
+      </div>
+    </div>
+
+    <div class="form-body" id="cli-form-body">
+      <div class="fgroup">
+        <label>Company Name <span class="req">*</span></label>
+        <input class="finput" id="cl-co" type="text" placeholder="e.g. Serengeti Breweries Ltd">
+      </div>
+      <div class="frow">
+        <div class="fgroup">
+          <label>Industry <span class="req">*</span></label>
+          <select class="fselect" id="cl-ind">
+            <option value="">— Select industry —</option>
+            <option>Banking</option><option>Beverages</option><option>Construction</option>
+            <option>Education</option><option>Healthcare</option><option>Hospitality</option>
+            <option>Logistics</option><option>Manufacturing</option><option>Media</option>
+            <option>Mining</option><option>NGO</option><option>Retail</option>
+            <option>Telecoms</option><option>Other</option>
+          </select>
+        </div>
+        <div class="fgroup">
+          <label>City / Location <span class="req">*</span></label>
+          <input class="finput" id="cl-city" type="text" placeholder="e.g. Dar es Salaam, Mwanza...">
+        </div>
+      </div>
+
+      <div class="fdivider"><span>Contact Person</span></div>
+
+      <div class="frow">
+        <div class="fgroup">
+          <label>Contact Person <span class="req">*</span></label>
+          <input class="finput" id="cl-contact" type="text" placeholder="Mr./Ms. Full Name">
+        </div>
+        <div class="fgroup">
+          <label>Phone Number <span class="req">*</span></label>
+          <input class="finput" id="cl-phone" type="tel" placeholder="+255 7XX XXX XXX">
+        </div>
+      </div>
+      <div class="fgroup">
+        <label>Email Address</label>
+        <input class="finput" id="cl-email" type="email" placeholder="hr@company.co.tz">
+      </div>
+
+      <div class="fdivider"><span>Hiring Requirements</span></div>
+
+      <div class="frow">
+        <div class="fgroup">
+          <label>Position Needed <span class="req">*</span></label>
+          <select class="fselect" id="cl-pos">
+            <option value="">— Select position —</option>
+          </select>
+        </div>
+        <div class="fgroup">
+          <label>Number of Vacancies <span class="req">*</span></label>
+          <input class="finput" id="cl-vac" type="number" min="1" value="1" placeholder="1">
+        </div>
+      </div>
+      <div class="fgroup">
+        <label>Budget Range (TZS / month)</label>
+        <input class="finput" id="cl-budget" type="text" placeholder="e.g. 1,200,000 – 1,600,000">
+        <div class="fhint">Leave blank if negotiable</div>
+      </div>
+      <div class="fgroup">
+        <label>Special Requirements / Notes</label>
+        <textarea class="ftextarea" id="cl-notes" placeholder="Urgency, preferred experience level, specific skills, start date..."></textarea>
+      </div>
+    </div>
+
+    <!-- Success state -->
+    <div class="success-card" id="cli-success">
+      <div class="success-icon">✅</div>
+      <div class="success-title">Enquiry Submitted!</div>
+      <div class="success-sub">Thank you for choosing Kazi Connect.</div>
+      <div class="success-id" id="cli-success-id">Ref: —</div>
+      <div class="success-note">Your hiring request has been received. A senior recruitment consultant will contact you within <strong>24 hours</strong> to discuss your requirements in detail.</div>
+      <button class="btn-another" onclick="resetClient()">Submit Another Enquiry</button>
+    </div>
+
+    <div class="form-footer" id="cli-footer">
+      <div class="form-footer-note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Submissions go directly to our recruitment dashboard
+      </div>
+      <div style="display:flex;gap:10px">
+        <button class="btn-reset" onclick="resetClient()">Clear Form</button>
+        <button class="btn-submit" id="cli-submit-btn" onclick="submitClient()" style="background:#5B21B6">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>
+          Submit Enquiry
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="info-section">
+  <div style="text-align:center;margin-bottom:24px">
+    <div style="font-size:11px;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Why Kazi Connect?</div>
+    <div style="font-size:22px;font-weight:700;color:var(--txt)">East Africa's Trusted Recruitment Partner</div>
+  </div>
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="info-card-icon">⚡</div>
+      <h3>Fast Matching</h3>
+      <p>Our system matches candidates to vacancies in real-time, cutting your time-to-hire to days, not months.</p>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">🔒</div>
+      <h3>Confidential</h3>
+      <p>Your information is handled with strict confidentiality. We only share your profile with your explicit consent.</p>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">🌍</div>
+      <h3>Pan-East Africa</h3>
+      <p>We operate across Tanzania, Kenya, Uganda, Rwanda and beyond — connecting talent wherever it's needed.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <strong>Kazi Connect Recruitment Agency</strong><br>
+  Operations Dashboard · Registration Portal<br>
+  &copy; <span id="yr"></span> Kazi Connect. All rights reserved.
+</footer>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script>
+// ── POSITION REFERENCE ──────────────────────────────────────────────────────────
+const POSREF=[
+  ["HR Manager","Human Resources"],["HR Officer","Human Resources"],
+  ["Accountant","Finance"],["Finance Manager","Finance"],
+  ["Sales Officer","Sales"],["Sales Manager","Sales"],
+  ["Marketing Officer","Marketing"],["Marketing Manager","Marketing"],
+  ["IT Officer","IT"],["IT Manager","IT"],
+  ["Operations Manager","Operations"],["Customer Service","Cust. Service"],
+  ["Procurement Officer","Procurement"],["Admin Assistant","Administration"],
+  ["Receptionist","Administration"],["Driver","Logistics"],
+];
+
+// ── BROADCAST CHANNEL ──────────────────────────────────────────────────────────
+let RT_CH;
+try { RT_CH = new BroadcastChannel('hms_realtime'); } catch(e) { RT_CH = { postMessage(){} }; }
+try {
+  RT_CH.onmessage = (e) => {
+    if (e.data?.type === 'stats_update') loadStats();
+  };
+} catch(e) {}
+
+// ── FILE STAGING ───────────────────────────────────────────────────────────────
+let cvFiles = [];
+let _autoCity = '';
+let _autoCountry = '';
+
+async function detectLocation() {
+  try {
+    const r = await fetch('https://ipapi.co/json/');
+    if (!r.ok) throw new Error();
+    const d = await r.json();
+    if (d.city) {
+      _autoCity    = d.city;
+      _autoCountry = d.country_name || '';
+      const label  = _autoCity + (_autoCountry ? ', ' + _autoCountry : '');
+      const text   = document.getElementById('c-geo-text');
+      if (text) text.textContent = '📍 ' + label;
+      const chip = document.getElementById('c-geo-chip');
+      if (chip) chip.style.background = '#EFF6FF', chip.style.borderColor = '#BFDBFE', chip.style.color = '#1D4ED8';
+      const clCity = document.getElementById('cl-city');
+      if (clCity && !clCity.value) clCity.value = _autoCity;
+    } else {
+      const chip = document.getElementById('c-geo-chip');
+      if (chip) chip.style.display = 'none';
+    }
+  } catch(e) {
+    const chip = document.getElementById('c-geo-chip');
+    if (chip) chip.style.display = 'none';
+  }
+}
+const cvExt = n => ({ pdf:'📄',doc:'📝',docx:'📝',jpg:'🖼',jpeg:'🖼',png:'🖼' }[n.split('.').pop().toLowerCase()] || '📎');
+const fmtSize = b => b < 1024 ? b + 'B' : b < 1048576 ? (b/1024).toFixed(1) + 'KB' : (b/1048576).toFixed(1) + 'MB';
+
+function cvFilesChosen(fileList) {
+  const ok = ['pdf','doc','docx','jpg','jpeg','png'];
+  Array.from(fileList).forEach(f => {
+    const ext = f.name.split('.').pop().toLowerCase();
+    if (!ok.includes(ext)) { toast('Skipped ' + f.name + ' — unsupported type', true); return; }
+    if (cvFiles.find(x => x.name === f.name)) return;
+    if (f.size > 5 * 1024 * 1024) { toast('File too large (max 5 MB): ' + f.name, true); return; }
+    const r = new FileReader();
+    r.onload = e => {
+      cvFiles.push({ name: f.name, size: f.size, type: f.type, dataUrl: e.target.result });
+      cvRenderList();
+    };
+    r.readAsDataURL(f);
+  });
+}
+function cvDragOver(e) { e.preventDefault(); document.getElementById('cv-box')?.classList.add('dragging'); }
+function cvDragLeave()  { document.getElementById('cv-box')?.classList.remove('dragging'); }
+function cvDrop(e)      { e.preventDefault(); document.getElementById('cv-box')?.classList.remove('dragging'); cvFilesChosen(e.dataTransfer.files); }
+function cvRemoveFile(name) { cvFiles = cvFiles.filter(f => f.name !== name); cvRenderList(); }
+function cvClearAll()       { cvFiles = []; cvRenderList(); }
+function cvRenderList() {
+  const box     = document.getElementById('cv-box');
+  const preview = document.getElementById('cv-preview');
+  const list    = document.getElementById('cv-file-list');
+  const lbl     = document.getElementById('cv-count-lbl');
+  if (!box) return;
+  if (!cvFiles.length) {
+    preview?.classList.remove('on');
+    box.classList.remove('has-file');
+    return;
+  }
+  preview?.classList.add('on');
+  box.classList.add('has-file');
+  if (lbl) lbl.textContent = cvFiles.length + ' file' + (cvFiles.length !== 1 ? 's' : '') + ' selected';
+  if (!list) return;
+  const show = cvFiles.slice(0, 5), more = cvFiles.length - 5;
+  list.innerHTML = show.map(f => `
+    <div class="cv-file-item">
+      <span class="cv-file-icon">${cvExt(f.name)}</span>
+      <div class="cv-file-info">
+        <div class="cv-file-name" title="${f.name}">${f.name}</div>
+        <div class="cv-file-size">${fmtSize(f.size)}</div>
+      </div>
+      <button class="cv-file-remove" onclick="cvRemoveFile(${JSON.stringify(f.name)})">✕</button>
+    </div>`).join('') + (more > 0 ? `<div style="font-size:11px;color:var(--txt3);padding:4px 10px;font-style:italic">+${more} more file${more !== 1 ? 's' : ''}</div>` : '');
+}
+
+// ── SALARY HINT ────────────────────────────────────────────────────────────────
+function updateSalHint(v) {
+  const hint = document.getElementById('c-sal-hint');
+  if (!hint) return;
+  const n = parseFloat(v);
+  if (!n) { hint.textContent = ''; return; }
+  if (n < 400000)       { hint.textContent = '⚠ Below typical minimum — ensure this is correct'; hint.className = 'fhint err'; }
+  else if (n < 600000)  { hint.textContent = 'Entry-level range'; hint.className = 'fhint'; }
+  else if (n < 2000000) { hint.textContent = 'Mid-range position'; hint.className = 'fhint ok'; }
+  else                  { hint.textContent = 'Senior / management range'; hint.className = 'fhint ok'; }
+}
+document.addEventListener('input', e => { if (e.target.id === 'c-sal') updateSalHint(e.target.value); });
+
+// ── POPULATE POSITION DROPDOWNS ────────────────────────────────────────────────
+function getPositions() {
+  try {
+    const d = localStorage.getItem('hms_v3');
+    if (d) {
+      const p = JSON.parse(d);
+      if (p.pr && p.pr.length) return p.pr.map(r => r[0]);
+    }
+  } catch(e) {}
+  return POSREF.map(r => r[0]);
+}
+function populatePositions() {
+  const positions = getPositions();
+  const opts = positions.map(p => `<option value="${p}">${p}</option>`).join('');
+  ['c-position','cl-pos'].forEach(id => {
+    const sel = document.getElementById(id);
+    if (sel) sel.innerHTML = (id === 'c-position'
+      ? '<option value="">— Select a position —</option>'
+      : '<option value="">— Select position —</option>') + opts;
+  });
+}
+
+// ── LOAD LIVE STATS ────────────────────────────────────────────────────────────
+function loadStats() {
+  try {
+    const d = localStorage.getItem('hms_v3');
+    if (!d) return;
+    const db = JSON.parse(d);
+    const c    = db.candidates || [];
+    const cl   = db.clients    || [];
+    const jobs = db.jobs       || [];
+    const el = id => document.getElementById(id);
+    if (el('s-cands'))   el('s-cands').textContent   = c.length;
+    if (el('s-avail'))   el('s-avail').textContent   = c.filter(x => x.stage !== 'Hired').length;
+    if (el('s-clients')) el('s-clients').textContent = cl.length;
+    if (el('s-vacs'))    el('s-vacs').textContent    = jobs.filter(j => j.status === 'Active').length;
+  } catch(e) {}
+}
+
+// ── TOAST ──────────────────────────────────────────────────────────────────────
+function toast(msg, err = false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = err ? 'err' : '';
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+// ── TAB SWITCH ─────────────────────────────────────────────────────────────────
+function switchTab(which) {
+  document.getElementById('tab-cand').classList.toggle('active', which === 'candidate');
+  document.getElementById('tab-cli').classList.toggle('active',  which === 'client');
+  document.getElementById('form-cand').classList.toggle('active', which === 'candidate');
+  document.getElementById('form-cli').classList.toggle('active',  which === 'client');
+  document.querySelector('.form-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── VALIDATION HELPERS ─────────────────────────────────────────────────────────
+function shake(el) { el.classList.add('err'); el.focus(); setTimeout(() => el.classList.remove('err'), 1200); }
+function reqVal(id, label) {
+  const el = document.getElementById(id);
+  if (!el) return null;
+  const v = el.value.trim();
+  if (!v) { shake(el); toast(label + ' is required', true); return null; }
+  return v;
+}
+
+// ── CANDIDATE SUBMISSION ───────────────────────────────────────────────────────
+function submitCandidate() {
+  const name   = reqVal('c-name',     'Full Name');       if (!name)   return;
+  const phone  = reqVal('c-phone',    'Phone Number');    if (!phone)  return;
+  const pos    = reqVal('c-position', 'Position');        if (!pos)    return;
+  const exp    = reqVal('c-exp',      'Experience');      if (!exp)    return;
+  const expSal = reqVal('c-sal',      'Expected Salary'); if (!expSal) return;
+
+  const btn = document.getElementById('cand-submit-btn');
+  btn.disabled = true;
+  btn.innerHTML = `<svg class="spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:17px;height:17px"><path d="M21 12a9 9 0 1 1-6.22-8.56"/></svg> Sending…`;
+
+  const refNum = 'CAN-' + String(Date.now()).slice(-4);
+  const payload = {
+    _type: 'new_candidate',
+    _time: Date.now(),
+    _id:   'INB-' + Date.now(),
+    ref_id: refNum,
+    name, phone,
+    email:           document.getElementById('c-email').value.trim(),
+    city:            _autoCity,
+    country:         _autoCountry,
+    position:        pos,
+    experience:      parseInt(exp) || 0,
+    education:       document.getElementById('c-edu').value,
+    expected_salary: parseFloat(expSal) || 0,
+    reference:       document.getElementById('c-ref').value.trim(),
+    notes:           document.getElementById('c-notes').value.trim(),
+    cvFiles:         [...cvFiles],
+  };
+
+  setTimeout(() => {
+    writeInbox(payload);
+    try { RT_CH.postMessage({ type: 'new_candidate', data: payload }); } catch(e) {}
+    submitToCloud(payload);
+    postToNetlify(payload);
+    loadStats();
+
+    document.getElementById('cand-form-body').style.display = 'none';
+    document.getElementById('cand-footer').style.display    = 'none';
+    document.getElementById('cand-success').classList.add('show');
+    document.getElementById('cand-success-id').textContent  = 'Ref: ' + refNum;
+
+    btn.disabled = false;
+    btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg> Submit Registration`;
+  }, 900);
+}
+
+function resetCandidate() {
+  ['c-name','c-phone','c-email','c-exp','c-sal','c-ref','c-notes'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = '';
+  });
+  ['c-position','c-edu'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.selectedIndex = 0;
+  });
+  cvClearAll();
+  document.getElementById('cand-form-body').style.display = '';
+  document.getElementById('cand-footer').style.display    = '';
+  document.getElementById('cand-success').classList.remove('show');
+  document.getElementById('c-sal-hint').textContent = '';
+  document.getElementById('cv-box').classList.remove('has-file');
+}
+
+// ── CLIENT SUBMISSION ──────────────────────────────────────────────────────────
+function submitClient() {
+  const co      = reqVal('cl-co',      'Company Name');    if (!co)      return;
+  const ind     = reqVal('cl-ind',     'Industry');        if (!ind)     return;
+  const city    = reqVal('cl-city',    'City');            if (!city)    return;
+  const contact = reqVal('cl-contact', 'Contact Person');  if (!contact) return;
+  const phone   = reqVal('cl-phone',   'Phone Number');    if (!phone)   return;
+  const pos     = reqVal('cl-pos',     'Position Needed'); if (!pos)     return;
+  const vac     = reqVal('cl-vac',     'Vacancies');       if (!vac)     return;
+
+  const btn = document.getElementById('cli-submit-btn');
+  btn.disabled = true;
+  btn.innerHTML = `<svg class="spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:17px;height:17px"><path d="M21 12a9 9 0 1 1-6.22-8.56"/></svg> Sending…`;
+
+  const refNum = 'CLI-' + String(Date.now()).slice(-4);
+  const payload = {
+    _type: 'new_client',
+    _time: Date.now(),
+    _id:   'INB-' + Date.now(),
+    ref_id: refNum,
+    company:         co,
+    industry:        ind,
+    city,
+    contact_person:  contact,
+    phone,
+    email:           document.getElementById('cl-email').value.trim(),
+    position_needed: pos,
+    vacancies:       parseInt(vac) || 1,
+    budget_range:    document.getElementById('cl-budget').value.trim(),
+    notes:           document.getElementById('cl-notes').value.trim(),
+  };
+
+  setTimeout(() => {
+    writeInbox(payload);
+    try { RT_CH.postMessage({ type: 'new_client', data: payload }); } catch(e) {}
+    submitToCloud(payload);
+    postToNetlify(payload);
+    loadStats();
+
+    document.getElementById('cli-form-body').style.display = 'none';
+    document.getElementById('cli-footer').style.display    = 'none';
+    document.getElementById('cli-success').classList.add('show');
+    document.getElementById('cli-success-id').textContent  = 'Ref: ' + refNum;
+
+    btn.disabled = false;
+    btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg> Submit Enquiry`;
+  }, 900);
+}
+
+function resetClient() {
+  ['cl-co','cl-city','cl-contact','cl-phone','cl-email','cl-budget','cl-notes'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = '';
+  });
+  ['cl-ind','cl-pos'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.selectedIndex = 0;
+  });
+  const vacEl = document.getElementById('cl-vac');
+  if (vacEl) vacEl.value = '1';
+  document.getElementById('cli-form-body').style.display = '';
+  document.getElementById('cli-footer').style.display    = '';
+  document.getElementById('cli-success').classList.remove('show');
+}
+
+// ── WRITE TO INBOX ─────────────────────────────────────────────────────────────
+function writeInbox(data) {
+  try {
+    const raw = localStorage.getItem('hms_inbox');
+    const inbox = raw ? JSON.parse(raw) : [];
+    inbox.unshift(data);
+    if (inbox.length > 100) inbox.splice(100);
+    localStorage.setItem('hms_inbox', JSON.stringify(inbox));
+  } catch(e) {}
+}
+
+// ── NETLIFY CLOUD SUBMIT ───────────────────────────────────────────────────────
+const IS_LIVE = window.location.hostname !== 'localhost'
+    && !window.location.hostname.includes('127.0.0.1')
+    && window.location.protocol !== 'file:';
+
+function submitToCloud(data) {
+  if (!IS_LIVE) return;
+  fetch('/api/hms-submit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  }).catch(() => {});
+}
+
+function postToNetlify(data) {
+  try {
+    const payload = {
+      'form-name':       'portal-registration',
+      submission_type:   data._type === 'new_candidate' ? 'Candidate' : 'Company',
+      ref_id:            data.ref_id            || '',
+      name:              data.name              || '',
+      phone:             data.phone             || '',
+      email:             data.email             || '',
+      city:              data.city              || '',
+      position:          data.position          || '',
+      experience:        String(data.experience || ''),
+      education:         data.education         || '',
+      expected_salary:   String(data.expected_salary || ''),
+      employer:          data.employer          || '',
+      referral_source:   data.reference         || '',
+      company:           data.company           || '',
+      industry:          data.industry          || '',
+      position_needed:   data.position_needed   || '',
+      vacancies:         String(data.vacancies  || ''),
+      budget_range:      data.budget_range      || '',
+      contact_person:    data.contact_person    || '',
+      requirements:      data.requirements      || '',
+      notes:             data.notes             || '',
+    };
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: Object.entries(payload).map(([k,v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&')
+    }).catch(() => {});
+  } catch(e) {}
+}
+
+// ── INIT ───────────────────────────────────────────────────────────────────────
+document.getElementById('yr').textContent = new Date().getFullYear();
+populatePositions();
+loadStats();
+detectLocation();
+setInterval(loadStats, 30000);
+setInterval(populatePositions, 10000);
+</script>
+</body>
+</html>

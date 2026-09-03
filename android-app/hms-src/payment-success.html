@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful | Kazi Connect</title>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #F8FAFC; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+        .card { background: white; border-radius: 20px; padding: 60px 48px; text-align: center; max-width: 480px; width: 90%; box-shadow: 0 12px 48px rgba(0,0,0,0.1); }
+        .icon { width: 80px; height: 80px; background: #D1FAE5; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 28px; }
+        .icon svg { width: 40px; height: 40px; color: #10B981; stroke: #10B981; }
+        h1 { font-family: 'Raleway', sans-serif; font-size: 28px; font-weight: 800; color: #0F172A; margin-bottom: 12px; }
+        p { color: #64748B; font-size: 15px; line-height: 1.6; margin-bottom: 8px; }
+        .ref { font-size: 12px; color: #94A3B8; margin-top: 20px; font-family: monospace; }
+        .btns { display: flex; gap: 12px; justify-content: center; margin-top: 32px; flex-wrap: wrap; }
+        .btn { padding: 12px 24px; border-radius: 10px; font-weight: 600; font-size: 14px; text-decoration: none; border: none; cursor: pointer; transition: all 0.2s; }
+        .btn-primary { background: #2563EB; color: white; }
+        .btn-primary:hover { background: #1D4ED8; }
+        .btn-outline { background: transparent; color: #0F172A; border: 1px solid #E2E8F0; }
+        .btn-outline:hover { border-color: #2563EB; color: #2563EB; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="icon">
+            <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <polyline points="20 6 9 17 4 12"/>
+            </svg>
+        </div>
+        <h1>Payment Successful!</h1>
+        <p>Welcome to Kazi Connect. Your subscription is now active.</p>
+        <p>A confirmation email is on its way to you.</p>
+        <p class="ref" id="session-ref"></p>
+        <div class="btns">
+            <a href="dashboard.html" class="btn btn-primary">Go to Dashboard</a>
+            <a href="index.html" class="btn btn-outline">Back to Home</a>
+        </div>
+    </div>
+    <script>
+        const params = new URLSearchParams(location.search);
+        const ref = params.get('order_id') || params.get('transid') || params.get('session_id');
+        const pgRef = params.get('ref');
+        const amount = params.get('amount');
+        const plan = params.get('plan');
+        let refText = '';
+        if (ref) refText += 'Order: ' + ref;
+        if (pgRef) refText += (refText ? ' · ' : '') + 'Ref: ' + pgRef;
+        if (amount) refText += (refText ? ' · ' : '') + 'TZS ' + Number(amount).toLocaleString();
+        if (refText) document.getElementById('session-ref').textContent = refText;
+    </script>
+</body>
+</html>
