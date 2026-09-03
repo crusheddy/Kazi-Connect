@@ -11,6 +11,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     defaults:
       run:
         working-directory: android-app
@@ -52,3 +54,18 @@ jobs:
           name: kazi-connect-apk
           path: android-app/out/*.apk
           if-no-files-found: error
+
+      # Also published as a release asset, which gives a stable install link
+      # that can be shared without a GitHub login to the Actions tab.
+      - name: Publish APK to a prerelease
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: android-build-${{ github.sha }}
+          name: Kazi Connect APK (${{ github.ref_name }})
+          body: |
+            Debug build of the Kazi Connect Android app from `${{ github.ref_name }}`.
+            Bundles the marketing site and the HMS offline in one APK.
+
+            Commit: ${{ github.sha }}
+          prerelease: true
+          files: android-app/out/*.apk
