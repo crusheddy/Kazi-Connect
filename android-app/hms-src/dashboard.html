@@ -370,6 +370,28 @@
             .kanban { grid-template-columns: 1fr 1fr; }
             .report-kpis { grid-template-columns: 1fr; }
             .content { padding: 16px; }
+            /* 240px of fixed-width search does not fit beside the title and
+               the action buttons on a phone. */
+            .search-wrap { display: none; }
+            .topbar { padding: 0 14px; gap: 10px; }
+            #admin-gate { padding: 16px; }
+            .gate-card { padding: 36px 24px; }
+        }
+
+        /* On a phone the content column must be allowed to shrink. Without
+           min-width:0 a flex item refuses to go below its content's intrinsic
+           width, which widens the layout viewport past the screen and pushes
+           the admin gate off-centre. The charts compound it: Chart.js sizes
+           its canvas to the container on init, and a static canvas then holds
+           that width open so the container can never shrink back. Taking the
+           canvas out of flow breaks the cycle - it follows the container
+           instead of defining it. */
+        @media (max-width: 900px) {
+            .main { min-width: 0; }
+            .chart-wrap > canvas {
+                position: absolute; top: 0; left: 0;
+                width: 100% !important; height: 100% !important;
+            }
         }
 
         /* ── NOTIFICATION PANEL ── */
