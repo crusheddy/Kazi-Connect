@@ -357,9 +357,16 @@
             .charts-grid { grid-template-columns: 1fr; }
             .kanban { grid-template-columns: repeat(3, 1fr); }
         }
+        /* The sidebar is off-canvas on a phone, so it needs a way back in. */
+        .sb-toggle { display: none; }
+        .sb-backdrop { position: fixed; inset: 0; z-index: 45; display: none;
+                       background: rgba(0,0,0,0.45); }
+
         @media (max-width: 900px) {
             .sidebar { transform: translateX(-100%); }
             .sidebar.open { transform: translateX(0); }
+            .sb-toggle { display: flex; }
+            .sb-backdrop.open { display: block; }
             .main { margin-left: 0; }
             .bottom-grid, .reports-grid, .settings-grid { grid-template-columns: 1fr; }
             .form-row { grid-template-columns: 1fr; }
@@ -623,6 +630,10 @@
 <div class="main">
     <!-- TOPBAR -->
     <header class="topbar">
+        <button class="icon-btn sb-toggle" id="sb-toggle" onclick="toggleSidebar()"
+                aria-label="Open menu" aria-controls="sidebar" aria-expanded="false">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
         <div class="topbar-title" id="page-title">Overview</div>
         <div class="search-wrap">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -1404,6 +1415,7 @@
     </div>
     <div id="notif-panel-list" class="notif-panel-list"></div>
 </div>
+<div id="sb-backdrop" class="sb-backdrop" onclick="closeSidebar()"></div>
 <div id="notif-backdrop" class="notif-backdrop" onclick="toggleNotifPanel()"></div>
 
 <!-- EDIT CANDIDATE MODAL -->
@@ -2116,12 +2128,39 @@ function clearInbox() {
 
 // ── NAVIGATION ──
 const pages = document.querySelectorAll('.page');
+// ── SIDEBAR (off-canvas below 900px) ──
+function setSidebar(open) {
+    const sb = document.getElementById('sidebar');
+    const bd = document.getElementById('sb-backdrop');
+    const btn = document.getElementById('sb-toggle');
+    if (!sb) return;
+    sb.classList.toggle('open', open);
+    if (bd) bd.classList.toggle('open', open);
+    if (btn) {
+        btn.setAttribute('aria-expanded', String(open));
+        btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    }
+    // Stop the page behind scrolling while the drawer covers it.
+    document.body.style.overflow = open ? 'hidden' : '';
+}
+function toggleSidebar() {
+    setSidebar(!document.getElementById('sidebar').classList.contains('open'));
+}
+function closeSidebar() { setSidebar(false); }
+
+// Widening past the breakpoint puts the sidebar back in the layout; a stale
+// open state would leave the backdrop stranded over a desktop view.
+window.addEventListener('resize', () => {
+    if (window.innerWidth > 900) closeSidebar();
+});
+
 const navItems = document.querySelectorAll('.sb-item[data-page]');
 const pageTitles = { overview:'Overview', jobs:'Job Postings', candidates:'Candidates', clients:'Clients', placements:'Placements', posboard:'Position Board', pipeline:'Pipeline', interviews:'Interviews', reports:'Reports', settings:'Settings', inbox:'Registrations Inbox', docs:'CV Documents', payments:'Payments' };
 
 navItems.forEach(item => {
     item.addEventListener('click', () => {
         const pg = item.dataset.page;
+        closeSidebar();
         pages.forEach(p => p.classList.remove('active'));
         navItems.forEach(n => n.classList.remove('active'));
         document.getElementById('page-' + pg).classList.add('active');
@@ -3269,7 +3308,7 @@ document.addEventListener('keydown', function(e) {
     const anyModalOpen = document.querySelector('.modal-overlay.open');
 
     if (e.key === '?' || e.key === '/') { openModal('shortcuts'); return; }
-    if (e.key === 'Escape') { document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open')); const np = document.getElementById('notif-panel'); const nb = document.getElementById('notif-backdrop'); if(np) np.classList.remove('open'); if(nb) nb.classList.remove('open'); return; }
+    if (e.key === 'Escape') { document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open')); const np = document.getElementById('notif-panel'); const nb = document.getElementById('notif-backdrop'); if(np) np.classList.remove('open'); if(nb) nb.classList.remove('open'); closeSidebar(); return; }
     if (anyModalOpen) return;
 
     switch(e.key.toUpperCase()) {
