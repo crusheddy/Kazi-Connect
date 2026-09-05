@@ -1,24 +1,37 @@
+// Composites the adaptive layers the way Android does and applies each stock
+// mask, so clipping is something you can see rather than assume.
+// Writes icon-masks.png next to the project.
 import { chromium } from 'playwright';
 import { readFileSync } from 'node:fs';
-const R = new URL('../android/app/src/main/res/', import.meta.url).pathname;
-const b64 = (p) => 'data:image/png;base64,' + readFileSync(p).toString('base64');
-const fg = b64(`${R}/mipmap-xxxhdpi/ic_launcher_foreground.png`);
-const sq = b64(`${R}/mipmap-xxxhdpi/ic_launcher.png`);
-const br = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
-const p = await br.newPage();
-await p.setViewportSize({ width: 880, height: 260 });
-// Composite the adaptive layers the way Android does, under each mask shape.
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+const RES = join(ROOT, 'android/app/src/main/res');
+const uri = (p) => 'data:image/png;base64,' + readFileSync(join(RES, p)).toString('base64');
+
+const bg = uri('mipmap-xxxhdpi/ic_launcher_background.png');
+const fg = uri('mipmap-xxxhdpi/ic_launcher_foreground.png');
+const legacy = uri('mipmap-xxxhdpi/ic_launcher.png');
+
 const tile = (label, radius) => `
   <div style="text-align:center">
-    <div style="width:160px;height:160px;background:#16302A;border-radius:${radius};overflow:hidden;position:relative">
+    <div style="width:150px;height:150px;border-radius:${radius};overflow:hidden;position:relative">
+      <img src="${bg}" style="position:absolute;inset:0;width:100%;height:100%">
       <img src="${fg}" style="position:absolute;inset:0;width:100%;height:100%">
     </div><div style="margin-top:8px">${label}</div></div>`;
-await p.setContent(`<body style="margin:0;background:#8a8a8a;display:flex;gap:26px;align-items:center;padding:24px;font:12px sans-serif;color:#fff">
-  ${tile('circle mask', '50%')}
-  ${tile('squircle', '38px')}
+
+const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || undefined });
+const page = await browser.newPage();
+await page.setViewportSize({ width: 900, height: 240 });
+await page.setContent(`<body style="margin:0;background:#8a8a8a;display:flex;gap:26px;align-items:center;padding:24px;font:12px sans-serif;color:#fff">
+  ${tile('circle', '50%')}
+  ${tile('squircle', '36px')}
   ${tile('rounded sq', '20px')}
-  <div style="text-align:center"><img src="${sq}" style="width:160px;height:160px;border-radius:20px"><div style="margin-top:8px">legacy ic_launcher</div></div>
+  ${tile('teardrop', '50% 50% 50% 8px')}
+  <div style="text-align:center"><img src="${legacy}" style="width:150px;height:150px"><div style="margin-top:8px">legacy (pre-26)</div></div>
 </body>`);
-await p.waitForTimeout(400);
-await p.screenshot({ path: new URL('../icon-masks.png', import.meta.url).pathname });
-await br.close();
+await page.waitForTimeout(400);
+await page.screenshot({ path: join(ROOT, 'icon-masks.png') });
+await browser.close();
+console.log('wrote icon-masks.png');
