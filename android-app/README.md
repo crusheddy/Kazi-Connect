@@ -8,7 +8,9 @@ app, so it opens with no internet.
 android-app/
   scripts/build-www.mjs    assembles www/ from ../site + hms-src/
   scripts/vendor-fonts.mjs downloads the Google Fonts into vendor/ (run once)
-  scripts/make-icons.mjs   renders the "K" launcher icons
+  scripts/make-icons.mjs   renders the launcher icons
+  scripts/check-icons.mjs  previews them under Android's mask shapes
+  brand/mark.svg           flat vector Kazi Connect mark (icon fallback)
   src/app-shell.js         native behaviour: back button, external links
   hms-src/                 HMS pages, vendored from crusheddy/HMS-V0.001
   vendor/                  self-hosted fonts (Chart.js comes from node_modules)
@@ -58,6 +60,12 @@ time from root-relative paths to the live host.
 - Site changes: edit `site/`, then `npm run sync`.
 - HMS changes: copy the updated pages into `hms-src/`, then `npm run sync`.
 - Font families: edit the list in `scripts/vendor-fonts.mjs`, run `npm run fonts`.
+- Launcher icon: drop the real artwork at `android-app/brand/logo.png` and run
+  `npm run icons` — it takes priority over `brand/mark.svg` automatically.
+  `node scripts/check-icons.mjs` then writes `icon-masks.png` showing the
+  result under Android's circle, squircle and rounded-square masks. Both
+  scripts need Playwright (`npm i --no-save playwright`); the icons they
+  produce are committed, so a normal build does not need it.
 
 ## Release builds
 

@@ -19,3 +19,6 @@ android/captures/
 *.apk
 *.aab
 *.keystore
+
+# Written by scripts/check-icons.mjs for eyeballing the launcher icons.
+icon-masks.png

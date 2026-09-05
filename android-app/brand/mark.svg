@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="swoosh" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#BE4A17"/>
+      <stop offset="0.5" stop-color="#EA6A1E"/>
+      <stop offset="1" stop-color="#F79733"/>
+    </linearGradient>
+    <linearGradient id="ball" x1="0.25" y1="0" x2="0.75" y2="1">
+      <stop offset="0" stop-color="#F89B39"/>
+      <stop offset="1" stop-color="#E4611A"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="512" height="512" rx="112" fill="#16302A"/>
+
+  <text x="212" y="372" text-anchor="middle"
+        font-family="Liberation Serif, Times New Roman, Georgia, serif"
+        font-weight="700" font-size="330" fill="#F4EFE4">K</text>
+
+  <!-- the figure reaching upward: sphere head, arm sweeping up to meet it -->
+  <path d="M 142 418 Q 296 292 404 188 Q 312 332 196 442 Z" fill="url(#swoosh)"/>
+  <circle cx="396" cy="126" r="47" fill="url(#ball)"/>
+</svg>
