@@ -29,6 +29,7 @@ await cp(
   join(WWW, 'vendor', 'chart.umd.js'),
 );
 await cp(join(ROOT, 'src', 'app-shell.js'), join(WWW, 'app-shell.js'));
+await cp(join(ROOT, 'src', 'app-polish.css'), join(WWW, 'app-polish.css'));
 
 // The bundle is served from the app's own origin, so a page in hms/ reaches
 // vendor/ one level up.
@@ -57,6 +58,12 @@ const rewrite = (html, depth) => {
       .replace(
         /<link rel="stylesheet" href="((?:\.\.\/)*)(assets\/styles\.css|styles\.css)"[^>]*>/,
         `<link rel="stylesheet" href="${up}vendor/fonts.css" />\n    $&`,
+      )
+      // Anchored on </head> so the HMS pages get it too - they link no
+      // external stylesheet for the fonts rule above to attach to.
+      .replace(
+        /<\/head>/i,
+        `  <link rel="stylesheet" href="${up}app-polish.css" />\n  </head>`,
       )
       // Native shell: external links, hardware back, status bar.
       .replace(

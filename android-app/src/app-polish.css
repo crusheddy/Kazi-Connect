@@ -1,0 +1,60 @@
+/* Styling that belongs to the packaged app rather than the website.
+   Injected into the bundle by scripts/build-www.mjs. */
+
+/* Phones with a notch, a camera cutout or gesture navigation reserve space at
+   the edges. A WebView draws underneath it unless told otherwise, which is
+   how a sticky header ends up behind the status bar and a footer link ends up
+   under the gesture pill. The site and the HMS have different chrome, so both
+   are named here. */
+.site-header,
+.topbar {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+.site-footer {
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 1rem);
+}
+/* The HMS drawer and its gate run the full height of the screen. */
+.sidebar,
+#admin-gate {
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+body {
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+}
+
+/* Rubber-banding past the end of a page is browser behaviour; inside an app it
+   reads as a web page in a box. */
+html,
+body {
+  overscroll-behavior-y: contain;
+}
+
+/* Android otherwise inflates text in wide blocks on its own, which fights the
+   type scale. */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Long-pressing a button or a nav item should press it, not raise a text
+   selection handle. Body copy stays selectable. */
+.btn,
+.nav-links a,
+.nav-burger,
+.theme-toggle,
+.line-tag,
+.socials a,
+.sb-item,
+.icon-btn,
+.sb-toggle {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Momentum scrolling in the WebView. */
+body {
+  -webkit-overflow-scrolling: touch;
+}
