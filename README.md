@@ -92,3 +92,20 @@ position explicitly and labels every figure a projection.
 
 If you add results later, report them unrounded, and label any sample data in
 HMS screenshots as illustrative.
+
+## Changing the site's domain
+
+The public origin is written down once, in `site-url.js`. Canonical tags and
+the `og:`/`twitter:` URLs have to be literal in the HTML — crawlers and
+link-preview fetchers never run the page's JavaScript — so changing the
+domain is two steps:
+
+```bash
+# 1. edit the one line in site-url.js
+# 2. stamp it into every public page
+node set-site-url.js
+```
+
+`node set-site-url.js --check` reports drift without writing and exits
+non-zero, which is how CI catches a stale domain. `investor.html` is
+deliberately excluded: it is `noindex,nofollow` and carries no canonical.

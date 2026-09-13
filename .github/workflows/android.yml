@@ -33,6 +33,12 @@ jobs:
 
       - uses: android-actions/setup-android@v3
 
+      # A canonical tag pointing at a host the site is not served from tells
+      # search engines the content belongs elsewhere, and it drifts silently.
+      - name: Check the site URLs match site-url.js
+        run: node set-site-url.js --check
+        working-directory: .
+
       - name: Install dependencies
         run: npm ci
 

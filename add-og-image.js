@@ -3,7 +3,8 @@
    Safe to re-run - skips files that already have og:image. */
 const fs = require('fs');
 
-const BASE = 'https://sternconnect.netlify.app';
+// The origin lives in one place; see site-url.js.
+const BASE = require('./site-url').replace(/\/+$/, '');
 const TAGS = `
 <meta property="og:image" content="${BASE}/assets/img/og-image.jpg">
 <meta property="og:image:width" content="1200">
