@@ -51,6 +51,13 @@ const rewrite = (html, depth) => {
       .replace(/<link[^>]*rel="preconnect"[^>]*fonts\.googleapis\.com[^>]*>/g, '')
       // The site links out to the hosted HMS; in the app it is bundled alongside.
       .replace(/https:\/\/afrikakazihms\.netlify\.app\//g, `${up}hms/`)
+      // The site names Playfair Display and Inter in its font stacks but never
+      // loaded them, so on a device without them Android substituted Noto
+      // Serif and rewrapped the headings. Self-host what the CSS asks for.
+      .replace(
+        /<link rel="stylesheet" href="((?:\.\.\/)*)(assets\/styles\.css|styles\.css)"[^>]*>/,
+        `<link rel="stylesheet" href="${up}vendor/fonts.css" />\n    $&`,
+      )
       // Native shell: external links, hardware back, status bar.
       .replace(
         /<\/body>/i,

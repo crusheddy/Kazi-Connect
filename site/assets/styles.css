@@ -466,4 +466,28 @@ address strong{color:var(--text)}
   .process,.features,.grid-4,.crosslinks{grid-template-columns:1fr}
   .footer-grid{grid-template-columns:1fr}
   .chart-box{height:240px}
+
+  /* The desktop type scale and rhythm cost too much of a phone screen: the
+     hero alone filled the viewport before any content appeared. */
+  h1{font-size:1.95rem}
+  h2{font-size:1.45rem}
+  h3{font-size:1.08rem}
+  .lead{font-size:1.04rem}
+  .hero{padding-block:36px 32px}
+  section{padding-block:44px}
+  .section-tight{padding-block:32px}
+  .hero-split{margin-top:24px}
+
+  /* Buttons sat side by side and ended up too narrow to hit comfortably. */
+  .btn{padding:.85rem 1.25rem;min-height:44px;display:inline-flex;
+       align-items:center;justify-content:center}
+  .btn-row{display:flex;flex-direction:column;gap:10px;align-items:stretch}
+  .btn-row .btn{width:100%}
+}
+
+@media (max-width:380px){
+  h1{font-size:1.75rem}
+  h2{font-size:1.32rem}
+  .lead{font-size:1rem}
+  .wrap,.wrap-narrow{padding-inline:16px}
 }

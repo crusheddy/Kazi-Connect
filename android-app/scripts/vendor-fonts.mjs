@@ -9,12 +9,16 @@ const OUT = join(dirname(fileURLToPath(import.meta.url)), '..', 'vendor');
 const UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36';
 
 // Every family/weight combination referenced across site/ and hms/.
+// The site asks for Playfair Display and Inter in its font stacks but never
+// loaded them, so it silently fell back - to Georgia on desktop and to Noto
+// Serif on Android, whose wider metrics rewrapped the headings.
 const CSS_URL =
   'https://fonts.googleapis.com/css2' +
-  '?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700' +
+  '?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700' +
+  '&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700' +
   '&family=DM+Mono:wght@400;500' +
   '&family=Raleway:wght@400;500;600;700;800;900' +
-  '&family=Inter:wght@300;400;500;600' +
+  '&family=Inter:wght@300;400;500;600;700' +
   '&display=swap';
 
 const res = await fetch(CSS_URL, { headers: { 'User-Agent': UA } });
