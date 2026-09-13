@@ -3,7 +3,7 @@
    Safe to re-run - skips files that already have og:image. */
 const fs = require('fs');
 
-const BASE = 'https://kaziconnects.netlify.app';
+const BASE = 'https://sternconnect.netlify.app';
 const TAGS = `
 <meta property="og:image" content="${BASE}/assets/img/og-image.jpg">
 <meta property="og:image:width" content="1200">

@@ -8,7 +8,7 @@ This is a **separate project from the HMS application**, which lives in
 
 | | |
 |---|---|
-| Live site | https://kaziconnects.netlify.app |
+| Live site | https://sternconnect.netlify.app |
 | Netlify project | `kaziconnects` (id `1c458853-ef3a-4c01-84a5-75666747d6ca`) |
 | HMS app (separate) | https://afrikakazihms.netlify.app |
 
