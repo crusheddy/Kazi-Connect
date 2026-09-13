@@ -1,5 +1,15 @@
 apply plugin: 'com.android.application'
 
+// Release signing. The keystore never lives in the repo: CI writes it from a
+// secret, and a local build reads it from ~/.gradle/gradle.properties. When
+// none of that is present the release build simply comes out unsigned, so a
+// checkout without the key still compiles.
+def ksPath  = System.getenv('KEYSTORE_FILE')     ?: project.findProperty('kaziKeystoreFile')
+def ksPass  = System.getenv('KEYSTORE_PASSWORD') ?: project.findProperty('kaziKeystorePassword')
+def ksAlias = System.getenv('KEY_ALIAS')         ?: project.findProperty('kaziKeyAlias')
+def ksKey   = System.getenv('KEY_PASSWORD')      ?: project.findProperty('kaziKeyPassword')
+def canSign = ksPath && ksPass && ksAlias && ksKey && file(ksPath).exists()
+
 android {
     namespace = "com.kaziconnect.app"
     compileSdk = rootProject.ext.compileSdkVersion
@@ -16,10 +26,26 @@ android {
             ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
+    signingConfigs {
+        release {
+            if (canSign) {
+                storeFile file(ksPath)
+                storePassword ksPass
+                keyAlias ksAlias
+                keyPassword ksKey
+            }
+        }
+    }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            if (canSign) {
+                signingConfig signingConfigs.release
+            } else {
+                logger.lifecycle('No signing key configured - the release APK will be unsigned.')
+            }
         }
     }
 }

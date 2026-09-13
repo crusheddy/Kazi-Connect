@@ -43,11 +43,62 @@ jobs:
         run: ./gradlew assembleDebug --no-daemon
         working-directory: android-app/android
 
-      - name: Rename APK
+      # The keystore lives only in secrets. Without them the release build
+      # still runs - it just comes out unsigned - so R8 and the ProGuard rules
+      # stay under test even on a checkout with no key.
+      - name: Decode signing keystore
+        id: keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+        run: |
+          if [ -n "$KEYSTORE_BASE64" ]; then
+            printf '%s' "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/release.keystore"
+            echo "path=$RUNNER_TEMP/release.keystore" >> "$GITHUB_OUTPUT"
+            echo "keystore decoded"
+          else
+            echo "no KEYSTORE_BASE64 secret set - the release build will be unsigned"
+          fi
+
+      - name: Assemble release APK
+        run: ./gradlew assembleRelease --no-daemon
+        working-directory: android-app/android
+        env:
+          KEYSTORE_FILE: ${{ steps.keystore.outputs.path }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+
+      - name: Collect APKs
         run: |
           mkdir -p out
           cp android/app/build/outputs/apk/debug/app-debug.apk \
-             "out/kazi-connect-${GITHUB_SHA::7}.apk"
+             "out/kazi-connect-${GITHUB_SHA::7}-debug.apk"
+          rel=android/app/build/outputs/apk/release
+          if [ -f "$rel/app-release.apk" ]; then
+            cp "$rel/app-release.apk" "out/kazi-connect-${GITHUB_SHA::7}-release.apk"
+          elif [ -f "$rel/app-release-unsigned.apk" ]; then
+            cp "$rel/app-release-unsigned.apk" \
+               "out/kazi-connect-${GITHUB_SHA::7}-release-UNSIGNED.apk"
+            echo "::warning::No signing secrets set, so the release APK is unsigned and will not install. See android-app/README.md."
+          fi
+          ls -la out
+
+      # A release APK that crashes on launch because R8 stripped a Capacitor
+      # plugin is the failure mode these rules exist to prevent, so check the
+      # plugin classes and the web bundle actually survived.
+      - name: Verify the release APK kept what it needs
+        run: |
+          apk=$(ls out/*release*.apk 2>/dev/null | head -1) || exit 0
+          [ -n "$apk" ] || { echo "no release APK to check"; exit 0; }
+          for asset in assets/public/index.html assets/public/hms/dashboard.html \
+                       assets/capacitor.plugins.json; do
+            unzip -l "$apk" | grep -q "$asset" || { echo "MISSING: $asset"; exit 1; }
+          done
+          unzip -p "$apk" assets/capacitor.plugins.json | grep -o '"classpath": *"[^"]*"' | while read -r line; do
+            cls=$(echo "$line" | sed 's/.*"\([^"]*\)"$/\1/')
+            echo "plugin class referenced: $cls"
+          done
+          echo "release APK contents look intact"
 
       - uses: actions/upload-artifact@v4
         with:

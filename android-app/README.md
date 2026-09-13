@@ -74,7 +74,48 @@ time from root-relative paths to the live host.
 
 ## Release builds
 
-`npm run apk` produces a *debug* APK — installable, but not Play Store
-material. For a release build, generate a keystore, add a `signingConfigs`
-block to `android/app/build.gradle`, and run `./gradlew assembleRelease`.
-Keep the keystore out of the repo (`.gitignore` already excludes `*.keystore`).
+`npm run apk` produces a *debug* APK. The release build is wired up but needs
+a signing key, which never goes in the repo.
+
+**1. Generate the keystore** (once, and keep it safe — if the app ever reaches
+the Play Store this key is its permanent identity, and losing it means never
+being able to publish an update):
+
+```bash
+keytool -genkeypair -v \
+  -keystore kazi-connect-release.keystore \
+  -alias kazi-connect -keyalg RSA -keysize 2048 -validity 10000
+```
+
+**2. Add four repository secrets** under Settings → Secrets and variables →
+Actions:
+
+| Secret | Value |
+| --- | --- |
+| `KEYSTORE_BASE64` | `base64 -w0 kazi-connect-release.keystore` |
+| `KEYSTORE_PASSWORD` | the store password from step 1 |
+| `KEY_ALIAS` | `kazi-connect` |
+| `KEY_PASSWORD` | the key password from step 1 |
+
+Push, and the workflow attaches a signed `…-release.apk` to the run. Until
+those secrets exist the release build still runs and is still checked — it
+just comes out unsigned, and an unsigned APK will not install.
+
+**Building a release locally** — put the same values in
+`~/.gradle/gradle.properties` (outside the repo):
+
+```properties
+kaziKeystoreFile=/absolute/path/kazi-connect-release.keystore
+kaziKeystorePassword=…
+kaziKeyAlias=kazi-connect
+kaziKeyPassword=…
+```
+
+then `cd android && ./gradlew assembleRelease`.
+
+**R8** is on for release builds (`minifyEnabled` + `shrinkResources`).
+Capacitor loads its plugins by name from `assets/capacitor.plugins.json`, so
+R8 sees no reference to them — `android/app/proguard-rules.pro` keeps those
+classes, and CI checks the built release APK still contains the plugin
+manifest and the web bundle. Adding a Capacitor plugin means checking it
+survives; a stripped plugin shows up as a crash on launch, not a build error.
